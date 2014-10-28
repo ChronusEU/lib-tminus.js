@@ -1,0 +1,15 @@
+{
+  "name": "lib-tminus.js",
+  "version": "0.0.1",
+  "authors": [
+    "Kiskae"
+  ],
+  "description": "A lightweight countdown library for the browser",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "spec"
+  ]
+}
