@@ -13,7 +13,7 @@ gulp.task 'script:compile', ['clean'], ->
         .pipe browserify
             transform: ['coffeeify']
             extensions: ['.coffee']
-        .pipe rename 'lib-countdown.js'
+        .pipe rename 'lib-tminus.js'
         .pipe gulp.dest 'dist'
         .pipe rename
             suffix: '.min'
