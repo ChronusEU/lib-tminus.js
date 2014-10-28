@@ -19,16 +19,16 @@ These files contain all the code necessary, exposing the object `TminusLib` in t
 This version of the library uses the data-attribute feature of HTML5, which allows the user to format the countdown through html.
 ```html
 <div class="loading countdown">
-  <span data-countdown-hide-if-zero="d">
-    <span data-countdown-unit="d"></span>d 
+  <span data-tminus-hide-if-zero="d">
+    <span data-tminus-unit="d"></span>d 
   </span>
-  <span data-countdown-unit="h"></span>h 
-  <span data-countdown-unit="m"></span>m 
-  <span data-countdown-unit="s"></span>s
+  <span data-tminus-unit="h"></span>h 
+  <span data-tminus-unit="m"></span>m 
+  <span data-tminus-unit="s"></span>s
 </div>
 ```
-What the library will do is inject the elements with the attribute `data-countdown-unit` with the value of the specified unit, the attribute specifying the unit through its value.
-The `data-countdown-hide-if-zero` attribute will make the library set `display: 'none'` on the element once the value of the specified unit is no longer significant, which means that it has become zero and won't ever be anything other than zero past that point.
+What the library will do is inject the elements with the attribute `data-tminus-unit` with the value of the specified unit, the attribute specifying the unit through its value.
+The `data-tminus-hide-if-zero` attribute will make the library set `display: 'none'` on the element once the value of the specified unit is no longer significant, which means that it has become zero and won't ever be anything other than zero past that point.
 
 The library exposes three methods that can be used to initialize the countdown. They differ in the way that the target date is specified but share the last two parameters.
 
@@ -50,12 +50,12 @@ The library exposes three methods that can be used to initialize the countdown. 
 **Example (with jQuery)**
 ```html
 <div class="loading countdown" id="countdown">
-  <span data-countdown-hide-if-zero="d">
-    <span data-countdown-unit="d"></span>d 
+  <span data-tminus-hide-if-zero="d">
+    <span data-tminus-unit="d"></span>d 
   </span>
-  <span data-countdown-unit="h"></span>h 
-  <span data-countdown-unit="m"></span>m 
-  <span data-countdown-unit="s"></span>s
+  <span data-tminus-unit="h"></span>h 
+  <span data-tminus-unit="m"></span>m 
+  <span data-tminus-unit="s"></span>s
 </div>
 
 <script src="lib-tminus.min.js"></script>

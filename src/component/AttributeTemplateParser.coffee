@@ -11,8 +11,8 @@ class: ([String [, String]]) -> AttributeTemplateParser
 ###
 
 class AttributeTemplateParser
-    DOM_DISPLAY_ATTRIBUTE = "countdown-unit"
-    DOM_HIDABLE_ATTRIBUTE = "countdown-hide-if-zero"
+    DOM_DISPLAY_ATTRIBUTE = "tminus-unit"
+    DOM_HIDABLE_ATTRIBUTE = "tminus-hide-if-zero"
     
     # Period.getUnit keys -> shouldZeroPad
     RECOGNIZED_KEYS = {}
