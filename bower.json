@@ -1,6 +1,7 @@
 {
   "name": "lib-tminus",
   "version": "0.0.1",
+  "main": "dist/lib-tminus.js",
   "authors": [
     "Kiskae"
   ],
@@ -10,6 +11,7 @@
     "**/.*",
     "node_modules",
     "bower_components",
-    "spec"
+    "spec",
+    "src"
   ]
 }

@@ -35,4 +35,4 @@ gulp.task 'test', ->
 gulp.task 'clean', (cb) ->
     del ['dist', 'gen-js'], cb
             
-gulp.task 'default', ['script:compile', 'script:build-js']
+gulp.task 'default', ['script:compile']
