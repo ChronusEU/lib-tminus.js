@@ -8,6 +8,10 @@
   },
   "author": "Kiskae",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Kiskae/lib-tminus.js.git"
+  },
   "devDependencies": {
     "browserify": "^6.2.0",
     "coffee-script": "^1.8.0",
