@@ -4,8 +4,7 @@
   "description": "A lightweight countdown library for the browser",
   "main": "",
   "scripts": {
-    "test": "gulp test",
-    "prepublish": "gulp script:compile script:build-js"
+    "test": "gulp test"
   },
   "author": "Kiskae",
   "license": "MIT",
