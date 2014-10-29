@@ -5,7 +5,7 @@
   "main": "",
   "scripts": {
     "test": "gulp test",
-    "install": "gulp script:compile script:build-js"
+    "prepublish": "gulp script:compile script:build-js"
   },
   "author": "Kiskae",
   "license": "MIT",
