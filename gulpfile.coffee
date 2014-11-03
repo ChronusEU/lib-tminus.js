@@ -6,6 +6,18 @@ rename = require 'gulp-rename'
 jasmine = require 'gulp-jasmine'
 coffee = require 'gulp-coffee'
 del = require 'del'
+header = require 'gulp-header'
+
+pkg = require './package.json'
+banner = """
+/*!
+ * <%= pkg.name %> - <%= pkg.description %>
+ * @version v<%= pkg.version %>
+ * @link <%= pkg.homepage %>
+ * @license <%= pkg.license %>
+ */
+
+"""
 
 gulp.task 'script:compile', ['clean'], ->
     return gulp.src 'src/lib.coffee', 
@@ -15,6 +27,8 @@ gulp.task 'script:compile', ['clean'], ->
             extensions: ['.coffee']
             standalone: 'TminusLib'
         .pipe rename 'lib-tminus.js'
+        .pipe header banner, 
+            pkg: pkg
         .pipe gulp.dest 'dist'
         .pipe rename
             suffix: '.min'
