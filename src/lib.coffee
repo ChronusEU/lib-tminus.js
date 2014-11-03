@@ -1,7 +1,7 @@
 ###
 TODO: description
 
-exposed through window.TminusLib or require(<this file>):
+exposed through window.TminusLib or require('lib-tminus'):
     createCountdownWithEpoch: (Number, DOMElement | Array(DOMElement) [, Options]) -> countdown.StateWindow
         @param 1 Target date in seconds since epoch
         @param 2 Either a single or list of DOMElements which will be parsed for tminus attributes
