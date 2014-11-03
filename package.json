@@ -2,9 +2,10 @@
   "name": "lib-tminus",
   "version": "0.0.1",
   "description": "A lightweight countdown library for the browser",
-  "main": "src/lib.js",
+  "main": "gen-js/lib.js",
   "scripts": {
-    "test": "gulp test"
+    "test": "gulp test",
+    "prepublish": "gulp script:build-js"
   },
   "author": "Kiskae",
   "license": "MIT",
