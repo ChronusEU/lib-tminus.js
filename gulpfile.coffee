@@ -13,6 +13,7 @@ gulp.task 'script:compile', ['clean'], ->
         .pipe browserify
             transform: ['coffeeify']
             extensions: ['.coffee']
+            standalone: 'TminusLib'
         .pipe rename 'lib-tminus.js'
         .pipe gulp.dest 'dist'
         .pipe rename
