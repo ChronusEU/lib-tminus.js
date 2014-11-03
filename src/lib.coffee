@@ -4,17 +4,17 @@ TODO: description
 exposed through window.TminusLib or require(<this file>):
     createCountdownWithEpoch: (Number, DOMElement | Array(DOMElement) [, Options]) -> countdown.StateWindow
         @param 1 Target date in seconds since epoch
-        @param 2
+        @param 2 Either a single or list of DOMElements which will be parsed for tminus attributes
         @param 3 See Options
         @return See countdown.StateWindow
     createCountdownWithChronus: (String, DOMElement | Array(DOMElement) [, Options]) -> countdown.StateWindow
         @param 1 Target date as a chronus date identifier (hexadecimal encoding of number of minutes since epoch)
-        @param 2
+        @param 2 Either a single or list of DOMElements which will be parsed for tminus attributes
         @param 3 See Options
         @return See countdown.StateWindow
     createCountdownWithDate: (Date, DOMElement | Array(DOMElement) [, Options]) -> countdown.StateWindow
         @param 1 Target date as a native javascript date object
-        @param 2
+        @param 2 Either a single or list of DOMElements which will be parsed for tminus attributes
         @param 3 See Options
         @return See countdown.StateWindow
 
@@ -53,10 +53,12 @@ createCountdown = (endDate, elements, options = {}) ->
     
     baseCountdown endDate, new AttributeTemplateParser().build(elements), options
 
-module.exports = window['TminusLib'] = exposedObject = {}
-exposedObject['createCountdownWithEpoch'] = (epoch, elements, options) ->
+
+module.exports = 
+    Instant: require './unit/Instant'
+    createCountdownWithEpoch: (epoch, elements, options) ->
         createCountdown epoch * 1000, elements, options
-exposedObject['createCountdownWithChronus'] = (ident, elements, options) ->
+    createCountdownWithChronus: (ident, elements, options) ->
         if not /^[0-9A-Fa-f]+$/.test(ident) then throw new Error("#{ident} is not a valid Chronus identifier")
         createCountdownWithEpoch parseInt(ident, 16) * 60, elements, options
-exposedObject['createCountdownWithDate'] = createCountdown
+    createCountdownWithDate: createCountdown
