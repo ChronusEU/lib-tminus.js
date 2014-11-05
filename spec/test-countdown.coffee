@@ -4,7 +4,7 @@ describe 'countdown base', ->
     countdown = null
     
     beforeEach ->
-        # Stub out looper and epoch, since they use window objects
+        # Stub out looper and epoch, since they use the window object
         countdown = proxyquire '../src/component/countdown',
             './looper': 
                 '@noCallThru': true
