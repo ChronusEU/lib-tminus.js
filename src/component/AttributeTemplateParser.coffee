@@ -15,14 +15,14 @@ class AttributeTemplateParser
     DOM_HIDABLE_ATTRIBUTE = "tminus-hide-if-zero"
     
     # Period.getUnit keys -> shouldZeroPad
-    RECOGNIZED_KEYS =
-        s: true
-        S: true
-        m: true
-        M: true
-        h: true
-        H: true
-        d: true
+    RECOGNIZED_KEYS = {}
+    RECOGNIZED_KEYS["s"] = true
+    RECOGNIZED_KEYS["S"] = true
+    RECOGNIZED_KEYS["m"] = true
+    RECOGNIZED_KEYS["M"] = true
+    RECOGNIZED_KEYS["h"] = false
+    RECOGNIZED_KEYS["H"] = false
+    RECOGNIZED_KEYS["d"] = false
         
     concatArrays = (inputArrays) ->
         out = []
