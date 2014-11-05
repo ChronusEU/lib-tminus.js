@@ -24,9 +24,11 @@ class AttributeTemplateParser
     RECOGNIZED_KEYS["H"] = false
     RECOGNIZED_KEYS["d"] = false
         
-    concatArrays = (inputArrays) ->
-        out = []
-        out.push(x) for x in arr for arr in inputArrays
+    # Array(Array(T)) -> Array(T)
+    flatten = (outer) ->
+        out = [] #Array(T)
+        #out <- elem for outer(inner(elem))
+        out.push(elem) for elem in inner for inner in outer
         out
     
     zeroPad = (num) -> if num < 10 then "0#{num}" else "#{num}"
@@ -65,9 +67,9 @@ class AttributeTemplateParser
     
     build: (rootElements) ->
         displayAttributeKey = "[data-#{@displayAttribute}]" #Cache key because function scope messes with it
-        displayElements = concatArrays (element.querySelectorAll(displayAttributeKey) for element in rootElements)
+        displayElements = flatten (element.querySelectorAll(displayAttributeKey) for element in rootElements)
         hidableAttributeKey = "[data-#{@hidableAttribute}]" #Cache key because function scope messes with it
-        hidableElements = concatArrays (element.querySelectorAll(hidableAttributeKey) for element in rootElements)
+        hidableElements = flatten (element.querySelectorAll(hidableAttributeKey) for element in rootElements)
         
         #Create updaters for each key, filter out the keys without updaters and flatmap to a single array
         updaters = (@createUpdater key, shouldZeroPad, displayElements, hidableElements for key, shouldZeroPad of RECOGNIZED_KEYS).filter (x) -> x isnt false
