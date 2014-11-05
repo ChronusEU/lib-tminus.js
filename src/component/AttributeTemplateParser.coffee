@@ -30,6 +30,7 @@ class AttributeTemplateParser
         out
     
     zeroPad = (num) -> if num < 10 then "0#{num}" else "#{num}"
+    noopZeroPad = (num) -> "#{num}"
     
     constructor: (@displayAttribute = DOM_DISPLAY_ATTRIBUTE, @hidableAttribute = DOM_HIDABLE_ATTRIBUTE) ->
         
@@ -41,6 +42,8 @@ class AttributeTemplateParser
         hidableAttributeKey = "data-#{@hidableAttribute}" #Cache key because function scope messes with it
         filteredHidable = Array::filter.call hidableElements, (x) -> 
             x.getAttribute(hidableAttributeKey) is key
+            
+        localZeroPad = if shouldZeroPad then zeroPad else noopZeroPad
         
         previousValue = Number.NaN
         
@@ -50,7 +53,7 @@ class AttributeTemplateParser
                 [value, significant] = period.getUnit key
                 if previousValue isnt value
                     previousValue = value
-                    paddedValue = if shouldZeroPad then zeroPad(value)  else "#{value}"
+                    paddedValue = localZeroPad value
                     
                     displayElem.innerHTML = paddedValue for displayElem in filteredDisplay
                     
