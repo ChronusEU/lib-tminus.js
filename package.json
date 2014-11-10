@@ -5,7 +5,7 @@
   "main": "gen-js/lib.js",
   "scripts": {
     "test": "gulp test",
-    "prepublish": "gulp script:build-js"
+    "prepublish": "gulp build:js-sources"
   },
   "author": "Kiskae",
   "license": "MIT",
