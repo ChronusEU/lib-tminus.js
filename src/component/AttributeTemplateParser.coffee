@@ -1,20 +1,40 @@
 ###
 TODO: comment
 
-class: ([String [, String]]) -> AttributeTemplateParser
+class: ([Options]) -> AttributeTemplateParser
     @param 1
-    @param 2
 
     build: (Array(DOMElement)) -> (Period) -> void
         @param 1
         @return
+Options:
+    displayAttribute: String
+    hidableAttribute: String
+    zeroPadOverrides: String => bool
 ###
+        
+# Array(Array(T)) -> Array(T)
+flatten = (outer) ->
+    out = [] #Array(T)
+    #out <- elem for outer(inner(elem))
+    out.push(elem) for elem in inner for inner in outer
+    out
+
+cloneObj = (original) ->
+    ret = {}
+    for key, val of original
+        ret[key] = val
+    ret
+
+zeroPad = (num) -> if num < 10 then "0#{num}" else "#{num}"
+noopZeroPad = (num) -> "#{num}"
 
 class AttributeTemplateParser
     DOM_DISPLAY_ATTRIBUTE = "tminus-unit"
     DOM_HIDABLE_ATTRIBUTE = "tminus-hide-if-zero"
     
     # Period.getUnit keys -> shouldZeroPad
+    # Uses a dictionary instead of an object because the names have semantic value
     RECOGNIZED_KEYS = {}
     RECOGNIZED_KEYS["s"] = true
     RECOGNIZED_KEYS["S"] = true
@@ -24,27 +44,7 @@ class AttributeTemplateParser
     RECOGNIZED_KEYS["H"] = false
     RECOGNIZED_KEYS["d"] = false
         
-    # Array(Array(T)) -> Array(T)
-    flatten = (outer) ->
-        out = [] #Array(T)
-        #out <- elem for outer(inner(elem))
-        out.push(elem) for elem in inner for inner in outer
-        out
-    
-    zeroPad = (num) -> if num < 10 then "0#{num}" else "#{num}"
-    noopZeroPad = (num) -> "#{num}"
-    
-    constructor: (@displayAttribute = DOM_DISPLAY_ATTRIBUTE, @hidableAttribute = DOM_HIDABLE_ATTRIBUTE) ->
-        
-    createUpdater: (key, shouldZeroPad, displayElements, hidableElements) ->
-        #Filter nodelists by their attribute keys
-        displayAttributeKey = "data-#{@displayAttribute}" #Cache key because function scope messes with it
-        filteredDisplay = Array::filter.call displayElements, (x) -> 
-            x.getAttribute(displayAttributeKey) is key
-        hidableAttributeKey = "data-#{@hidableAttribute}" #Cache key because function scope messes with it
-        filteredHidable = Array::filter.call hidableElements, (x) -> 
-            x.getAttribute(hidableAttributeKey) is key
-            
+    createUpdater = (key, shouldZeroPad, filteredDisplay, filteredHidable) ->
         localZeroPad = if shouldZeroPad then zeroPad else noopZeroPad
         
         previousValue = Number.NaN
@@ -67,14 +67,39 @@ class AttributeTemplateParser
         else
             false
     
-    build: (rootElements) ->
-        displayAttributeKey = "[data-#{@displayAttribute}]" #Cache key because function scope messes with it
-        displayElements = flatten (element.querySelectorAll(displayAttributeKey) for element in rootElements)
-        hidableAttributeKey = "[data-#{@hidableAttribute}]" #Cache key because function scope messes with it
-        hidableElements = flatten (element.querySelectorAll(hidableAttributeKey) for element in rootElements)
+    constructor: (options) ->
+        @displayAttribute = options?.displayAttribute ? DOM_DISPLAY_ATTRIBUTE
+        @hidableAttribute = options?.hidableAttribute ? DOM_HIDABLE_ATTRIBUTE
+        @zeroPadSettings = cloneObj RECOGNIZED_KEYS
         
-        #Create updaters for each key, filter out the keys without updaters and flatmap to a single array
-        updaters = (@createUpdater key, shouldZeroPad, displayElements, hidableElements for key, shouldZeroPad of RECOGNIZED_KEYS).filter (x) -> x isnt false
+        if options?.zeroPadOverrides?
+            for key, val in options.zeroPadOverrides
+                if RECOGNIZED_KEYS[key]?
+                    @zeroPadSettings[key] = val
+    
+    build: (rootElements) ->
+        # html5 attribute keys
+        displayAttributeKey = "data-#{@displayAttribute}"
+        hidableAttributeKey = "data-#{@hidableAttribute}"
+        
+        # Gather all elements marked with the attribute keys from the root elements and flatten the resulting arrays
+        displayElements = flatten (element.querySelectorAll("[#{displayAttributeKey}]") for element in rootElements)
+        hidableElements = flatten (element.querySelectorAll("[#{hidableAttributeKey}]") for element in rootElements)
+        
+        #Create updaters for each key
+        updaters = for key, shouldZeroPad of @zeroPadSettings
+            #Filter node-lists by comparing their data values and the selected key
+            filteredDisplay = Array::filter.call displayElements, (x) -> 
+                x.getAttribute(displayAttributeKey) is key
+            filteredHidable = Array::filter.call hidableElements, (x) -> 
+                x.getAttribute(hidableAttributeKey) is key
+                
+            #Create the updater function
+            createUpdater key, shouldZeroPad, filteredDisplay, filteredHidable
+            
+        # filter out the cases where #createUpdater returned false
+        updaters = updaters.filter (x) -> x isnt false
+        
         (period) -> 
             updater(period) for updater in updaters
             true
