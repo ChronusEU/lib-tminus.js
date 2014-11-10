@@ -57,10 +57,12 @@ class AttributeTemplateParser
                     previousValue = value
                     paddedValue = localZeroPad value
                     
-                    displayElem.innerHTML = paddedValue for displayElem in filteredDisplay
+                    (displayElem.innerHTML = paddedValue) for displayElem in filteredDisplay
                     
-                    if !significant #Once a value is no longer significant it cannot return, so one-way is acceptable.
-                        hidableElem.style.display = "none" for hidableElem in filteredHidable
+                    #Once a value is no longer significant it cannot return, 
+                    #so the reverse case does not need to be handled
+                    if not significant 
+                        (hidableElem.style.display = "none") for hidableElem in filteredHidable
                 false
         else
             false
