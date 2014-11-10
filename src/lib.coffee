@@ -55,7 +55,6 @@ createCountdown = (endDate, elements, options = {}) ->
 
 
 module.exports = 
-    Instant: require './unit/Instant'
     createCountdownWithEpoch: (epoch, elements, options) ->
         createCountdown epoch * 1000, elements, options
     createCountdownWithChronus: (ident, elements, options) ->
