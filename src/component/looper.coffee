@@ -8,30 +8,24 @@ function: (() -> bool) -> () -> void
     @return function that will cancel the loop if called.
 ###
 
-privateRequestAnimationFrame = window.requestAnimationFrame or
-                        window.webkitRequestAnimationFrame or
-                        window.mozRequestAnimationFrame or
-                        null
-privateCancelAnimationFrame =  window.cancelAnimationFrame or
-                        window.webkitCancelAnimationFrame or
-                        window.mozCancelAnimationFrame or
-                        window.webkitCancelRequestAnimationFrame or
-                        window.mozCancelRequestAnimationFrame or
-                        null
+proxyWindow = require '../window'
+
+requestAnimationFrameRef = proxyWindow.resolveVendor('requestAnimationFrame')
+cancelAnimationFrameRef = proxyWindow.resolveVendor('cancelAnimationFrame') or proxyWindow.resolveVendor('cancelRequestAnimationFrame')
 INTERVAL_60_FPS = (1000 // 60)
 
-if privateRequestAnimationFrame?
+if requestAnimationFrameRef?
     looperCreator = (func) ->
         #force this variable to be in this scope so it is shared.
         cancellationId = false
         
         timerCallback = ->
             if func() isnt false
-                cancellationId = privateRequestAnimationFrame timerCallback
+                cancellationId = requestAnimationFrameRef timerCallback
             false
         timerCallback() #Kickstart the loop
         
-        () -> privateCancelAnimationFrame cancellationId
+        () -> cancelAnimationFrameRef cancellationId
 else
     #Fall back to interval-based loop if there is no requestAnimationFrame
     looperCreator = (func) ->

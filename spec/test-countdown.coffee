@@ -1,16 +1,9 @@
-proxyquire = require 'proxyquire'
-
 describe 'countdown base', ->
     countdown = null
     
     beforeEach ->
-        # Stub out looper and epoch, since they use the window object
-        countdown = proxyquire '../src/component/countdown',
-            './looper': 
-                '@noCallThru': true
-            '../unit/epoch':
-                '@noCallThru': true
-    
+        countdown = require '../src/component/countdown'
+
     it 'should return false if the date is invalid', ->
         invalidDate = new Date(NaN)
         expect(countdown invalidDate, null, null).toEqual false
