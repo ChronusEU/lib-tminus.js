@@ -73,7 +73,7 @@ class AttributeTemplateParser
         @zeroPadSettings = cloneObj RECOGNIZED_KEYS
         
         if options?.zeroPadOverrides?
-            for key, val in options.zeroPadOverrides
+            for key, val of options.zeroPadOverrides
                 if RECOGNIZED_KEYS[key]?
                     @zeroPadSettings[key] = val
     
