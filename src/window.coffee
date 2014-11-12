@@ -24,7 +24,7 @@ capitalizeString = (str) ->
         str.toUpperCase()
 
 # Create a copy of the global object.
-globalRef = global
+globalRef = global or {}
 
 # Maps the given name to a set of vendor-prefixed names, then looks for these objects in the global namespace
 resolveWindowObject = (name) ->
