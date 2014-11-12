@@ -15,12 +15,12 @@ class: (Date | Number) -> Instant
 class Instant
     Period = require './Period'
     
-    constructor: (date) ->
+    constructor: (/* Number | Date */ date) ->
         @epoch = if typeof date is "number" then date else date.getTime()
 
     toDate: -> new Date(@epoch)
         
-    until: (otherInstant) ->
+    until: (/* Instant */ otherInstant) ->
         new Period(otherInstant.epoch - @epoch)
             
 module.exports = Instant

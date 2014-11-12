@@ -33,7 +33,7 @@ baseCountdown = require './component/countdown'
 AttributeTemplateParser = require './component/AttributeTemplateParser'
 ClassList = require 'class-list'
 
-createCountdown = (endDate, elements, options = {}) ->
+createCountdown = (/* Number | Date */ endDate, /* NodeList */ elements, /* object */ options = {}) ->
     #The AttributeTemplateParser expects an array
     if not elements.length? then elements = [elements]
     

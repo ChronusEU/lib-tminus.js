@@ -14,20 +14,20 @@ Options:
 ###
         
 # Array(Array(T)) -> Array(T)
-flatten = (outer) ->
+flatten = (/* Array(Array(T)) */ outer) ->
     out = [] #Array(T)
     #out <- elem for outer(inner(elem))
     out.push(elem) for elem in inner for inner in outer
     out
 
-cloneObj = (original) ->
+cloneObj = (/* object */ original) ->
     ret = {}
     for key, val of original
         ret[key] = val
     ret
 
-zeroPad = (num) -> if num < 10 then "0#{num}" else "#{num}"
-noopZeroPad = (num) -> "#{num}"
+zeroPad = (/* number */ num) -> if num < 10 then "0#{num}" else "#{num}"
+noopZeroPad = (/* number */ num) -> "#{num}"
 
 class AttributeTemplateParser
     DOM_DISPLAY_ATTRIBUTE = "tminus-unit"
@@ -44,14 +44,14 @@ class AttributeTemplateParser
     RECOGNIZED_KEYS["H"] = false
     RECOGNIZED_KEYS["d"] = false
         
-    createUpdater = (key, shouldZeroPad, filteredDisplay, filteredHidable) ->
+    createUpdater = (/* string */ key, /* bool */ shouldZeroPad, /* NodeList */ filteredDisplay, /* NodeList */ filteredHidable) ->
         localZeroPad = if shouldZeroPad then zeroPad else noopZeroPad
         
         previousValue = Number.NaN
         
         #Do not waste time updating if there are no elements that listen for this key
         if (filteredDisplay.length + filteredHidable.length) > 0
-            (period) ->
+            (/* Period */ period) ->
                 [value, significant] = period.getUnit key
                 if previousValue isnt value
                     previousValue = value
@@ -67,7 +67,7 @@ class AttributeTemplateParser
         else
             false
     
-    constructor: (options) ->
+    constructor: (/* object */ options) ->
         @displayAttribute = options?.displayAttribute ? DOM_DISPLAY_ATTRIBUTE
         @hidableAttribute = options?.hidableAttribute ? DOM_HIDABLE_ATTRIBUTE
         @zeroPadSettings = cloneObj RECOGNIZED_KEYS
@@ -77,7 +77,7 @@ class AttributeTemplateParser
                 if RECOGNIZED_KEYS[key]?
                     @zeroPadSettings[key] = val
     
-    build: (rootElements) ->
+    build: (/* NodeList */ rootElements) ->
         # html5 attribute keys
         displayAttributeKey = "data-#{@displayAttribute}"
         hidableAttributeKey = "data-#{@hidableAttribute}"
@@ -89,9 +89,9 @@ class AttributeTemplateParser
         #Create updaters for each key
         updaters = for key, shouldZeroPad of @zeroPadSettings
             #Filter node-lists by comparing their data values and the selected key
-            filteredDisplay = Array::filter.call displayElements, (x) -> 
+            filteredDisplay = Array::filter.call displayElements, (/* DOMElement */ x) -> 
                 x.getAttribute(displayAttributeKey) is key
-            filteredHidable = Array::filter.call hidableElements, (x) -> 
+            filteredHidable = Array::filter.call hidableElements, (/* DOMElement */ x) -> 
                 x.getAttribute(hidableAttributeKey) is key
                 
             #Create the updater function
@@ -100,7 +100,7 @@ class AttributeTemplateParser
         # filter out the cases where #createUpdater returned false
         updaters = updaters.filter (x) -> x isnt false
         
-        (period) -> 
+        (/* Period */ period) -> 
             updater(period) for updater in updaters
             true
 
