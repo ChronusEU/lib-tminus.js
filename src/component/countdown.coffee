@@ -22,7 +22,7 @@ Instant = require '../unit/Instant'
 Period = require '../unit/Period'
 currentEpoch = require '../unit/epoch'
 
-module.exports = (/* Number | Date */ endDate, /* function */ updater, /* object */ options = {}) ->
+module.exports = (endDate, updater, options = {}) ->
     endInstant = new Instant(endDate)
     
     if isNaN endInstant.epoch 

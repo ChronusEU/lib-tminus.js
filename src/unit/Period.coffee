@@ -25,18 +25,18 @@ class Period
     #Infinite for the purposes of this library
     INFINITE_SECONDS = Number.MAX_VALUE
     
-    extractUnit = (/* Number */ duration, /* Number */ upperBound, /* Number */ lowerBound) ->
+    extractUnit = (duration, upperBound, lowerBound) ->
         if lowerBound isnt 0
             [duration % upperBound // lowerBound, duration > lowerBound]
         else
             [duration % upperBound, true]
     
-    constructor: (/* Number */ duration) ->
+    constructor: (duration) ->
         @duration = Math.max duration // 1000, 0
         
     isFinished: -> @duration <= 0
 
-    getUnit: (/* string */ identifier) ->
+    getUnit: (identifier) ->
         switch identifier
             when "s" #seconds
                 extractUnit @duration, MINUTE_IN_SECONDS, 0

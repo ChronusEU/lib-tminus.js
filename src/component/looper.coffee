@@ -15,7 +15,7 @@ cancelAnimationFrameRef = proxyWindow.resolveVendor('cancelAnimationFrame') or p
 INTERVAL_60_FPS = (1000 // 60)
 
 if requestAnimationFrameRef?
-    looperCreator = (/* function */ func) ->
+    looperCreator = (func) ->
         #force this variable to be in this scope so it is shared.
         cancellationId = false
         
@@ -28,7 +28,7 @@ if requestAnimationFrameRef?
         () -> cancelAnimationFrameRef cancellationId
 else
     #Fall back to interval-based loop if there is no requestAnimationFrame
-    looperCreator = (/* function */ func) ->
+    looperCreator = (func) ->
         if func() isnt false
             intervalId = window.setInterval ->
                 if func() is false

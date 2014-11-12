@@ -17,7 +17,7 @@ VENDOR_PREFIXES = [
     "o"
 ]
 
-capitalizeString = (/* string */ str) ->
+capitalizeString = (str) ->
     if str.length > 1
         str[0].toUpperCase() + str.slice(1)
     else
@@ -27,7 +27,7 @@ capitalizeString = (/* string */ str) ->
 globalRef = global or {}
 
 # Maps the given name to a set of vendor-prefixed names, then looks for these objects in the global namespace
-resolveWindowObject = (/* string */ name) ->
+resolveWindowObject = (name) ->
     capitalizedName = capitalizeString name
     # Build a list of possible objects, filtering down the results to those returning an actual value
     possibleObjects = (obj for obj in (globalRef[prefix + capitalizedName] for prefix in VENDOR_PREFIXES) when obj?)
@@ -35,10 +35,10 @@ resolveWindowObject = (/* string */ name) ->
     possibleObjects[0] or null
 
 # Default action, just proxy the request
-windowProxy = (/* string */ name) -> globalRef[name]
+windowProxy = (name) -> globalRef[name]
 
 # Expanded action, try to directly proxy, otherwise try to resolve with vendor prefixes
-windowProxy.resolveVendor = (/* string */ name) ->
+windowProxy.resolveVendor = (name) ->
     globalRef[name] ? resolveWindowObject name
 
 module.exports = windowProxy
