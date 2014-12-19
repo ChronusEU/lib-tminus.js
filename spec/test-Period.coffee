@@ -10,8 +10,11 @@ describe 'Period', ->
     
     beforeEach ->
         @Instant = require '../src/unit/Instant'
+        Period = require '../src/unit/Period'
         @createInstant = (options) ->
             new @Instant(createDate options)
+        @createPeriod = (duration) ->
+            new Period(duration)
     
     it 'should handle a normal situation correctly', ->
         testInstant = @createInstant (
@@ -99,3 +102,48 @@ describe 'Period', ->
         )
         zero = @createInstant {}
         expect(zero.until(testInstant).isFinished()).toEqual(false)
+        
+    it 'should correctly calculate the seconds partial', ->
+        [seconds] = @createPeriod(-1000).getUnit("s");
+        expect(seconds).toEqual(0); #0 seconds
+        [seconds] = @createPeriod(0).getUnit("s");
+        expect(seconds).toEqual(0); #0 seconds
+        [seconds] = @createPeriod(1000).getUnit("s");
+        expect(seconds).toEqual(1); #1 second
+        [seconds] = @createPeriod(59000).getUnit("s");
+        expect(seconds).toEqual(59); #59 seconds
+        [seconds] = @createPeriod(60000).getUnit("s");
+        expect(seconds).toEqual(0); #1 minute, 0 seconds
+        [seconds] = @createPeriod(61000).getUnit("s");
+        expect(seconds).toEqual(1); #1 minute, 1 second
+        
+    it 'should correctly calculate the minutes partial', ->
+        [seconds] = @createPeriod(-1000).getUnit("m");
+        expect(seconds).toEqual(0); #0 minutes
+        [seconds] = @createPeriod(0).getUnit("m");
+        expect(seconds).toEqual(0); #0 minutes
+        [seconds] = @createPeriod(59000).getUnit("m");
+        expect(seconds).toEqual(0); #0 minutes, 59 seconds
+        [seconds] = @createPeriod(60000).getUnit("m");
+        expect(seconds).toEqual(1); #1 minute, 0 seconds
+        [seconds] = @createPeriod(61000).getUnit("m");
+        expect(seconds).toEqual(1); #1 minute, 1 second
+        
+    it 'should correctly calculate the hours partial', ->
+        [seconds] = @createPeriod(-1000).getUnit("h");
+        expect(seconds).toEqual(0); #0 hours
+        [seconds] = @createPeriod(0).getUnit("h");
+        expect(seconds).toEqual(0); #0 hours
+        [seconds] = @createPeriod(59000).getUnit("h");
+        expect(seconds).toEqual(0); #0 hours, 0 minutes, 59 seconds
+        [seconds] = @createPeriod(60000).getUnit("h");
+        expect(seconds).toEqual(0); #0 hours, 1 minute, 0 seconds
+        [seconds] = @createPeriod(61000).getUnit("h");
+        expect(seconds).toEqual(0); #0 hours, 1 minute, 1 second
+        [seconds] = @createPeriod(59 * 60000).getUnit("h");
+        expect(seconds).toEqual(0); #0 hours, 59 minutes
+        [seconds] = @createPeriod(60 * 60000).getUnit("h");
+        expect(seconds).toEqual(1); #1 hour, 0 minutes
+        [seconds] = @createPeriod(61 * 60000).getUnit("h");
+        expect(seconds).toEqual(1); #1 hour, 1 minute
+        
