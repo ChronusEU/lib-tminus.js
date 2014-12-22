@@ -18,6 +18,9 @@ Options:
     finishedClass: String
     loadedCallback: () -> void
     loadingClass: String
+    displayAttribute: String
+    hidableAttribute: String
+    zeroPadOverrides: String => bool
 countdown.StateWindow: (Copied from component/countdown)
     getUpdatedPeriod: () -> Period
     getCountdownPeriod: () -> Period
@@ -46,7 +49,7 @@ createCountdown = (endDate, elements, options = {}) ->
             ClassList(elem).remove(options['loadingClass']) for elem in elements
             oldLoadedCallback?()
     
-    baseCountdown endDate, new AttributeTemplateParser().build(elements), options
+    baseCountdown endDate, new AttributeTemplateParser(options).build(elements), options
 
 
 module.exports = 
