@@ -58,7 +58,7 @@ gulp.task 'test', ->
             verbose: true
 
 gulp.task 'watch', ['build:distribution'], ->
-    gulp.watch 'src/**/*.coffee', ['test', 'build:distribution']
+    gulp.watch 'src/**/*.coffee', ['build:distribution']
 
 gulp.task 'clean', (cb) ->
     del ['dist', 'gen-js'], cb
