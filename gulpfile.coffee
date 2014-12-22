@@ -20,6 +20,10 @@ banner = """
 
 """
 
+config =
+    globalName: 'TminusLib'
+    distName: 'lib-tminus.js'
+
 # Build the full distribution, compiled and minified to a single file
 gulp.task 'build:distribution', ['clean'], ->
     return gulp.src 'src/lib.coffee', 
@@ -28,8 +32,8 @@ gulp.task 'build:distribution', ['clean'], ->
         .pipe browserify
             transform: ['coffeeify']
             extensions: ['.coffee']
-            standalone: 'TminusLib'
-        .pipe rename 'lib-tminus.js'
+            standalone: config.globalName
+        .pipe rename config.distName
         .pipe header banner, 
             pkg: pkg
         .pipe gulp.dest 'dist'
