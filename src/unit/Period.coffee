@@ -20,8 +20,8 @@ class: (Number) -> Period
 
 class Period
     MINUTE_IN_SECONDS = 60
-    HOURS_IN_SECONDS = MINUTE_IN_SECONDS * 60
-    DAY_IN_SECONDS = HOURS_IN_SECONDS * 24
+    HOUR_IN_SECONDS = MINUTE_IN_SECONDS * 60
+    DAY_IN_SECONDS = HOUR_IN_SECONDS * 24
     #Infinite for the purposes of this library
     INFINITE_SECONDS = Number.MAX_VALUE
     
@@ -43,13 +43,13 @@ class Period
             when "S" #absolute seconds
                 extractUnit @duration, INFINITE_SECONDS , 0
             when "m" #minutes
-                extractUnit @duration, HOURS_IN_SECONDS , MINUTE_IN_SECONDS
+                extractUnit @duration, HOUR_IN_SECONDS , MINUTE_IN_SECONDS
             when "M" #absolute minutes
                 extractUnit @duration, INFINITE_SECONDS , MINUTE_IN_SECONDS
             when "h" #hours
-                extractUnit @duration, DAY_IN_SECONDS   , HOURS_IN_SECONDS
+                extractUnit @duration, DAY_IN_SECONDS   , HOUR_IN_SECONDS
             when "H" #absolute hours
-                extractUnit @duration, INFINITE_SECONDS , HOURS_IN_SECONDS
+                extractUnit @duration, INFINITE_SECONDS , HOUR_IN_SECONDS
             when "d" #days
                 extractUnit @duration, INFINITE_SECONDS , DAY_IN_SECONDS
             else [NaN, true]
