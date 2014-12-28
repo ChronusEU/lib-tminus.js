@@ -57,6 +57,10 @@ gulp.task 'test', ->
             includeStackTrace: true
             verbose: true
 
+# Actively run tests against any modifications
+gulp.task 'watch:test', ->
+    gulp.watch 'src/**/*.coffee', ['test']
+
 gulp.task 'watch', ['build:distribution'], ->
     gulp.watch 'src/**/*.coffee', ['build:distribution']
 
