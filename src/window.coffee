@@ -26,18 +26,24 @@ capitalizeString = (str) ->
 # Create a copy of the global object.
 globalRef = global or {}
 
-# Maps the given name to a set of vendor-prefixed names, then looks for these objects in the global namespace
+# Maps the given name to a set of vendor-prefixed names,
+# then looks for these objects in the global namespace
 resolveWindowObject = (name) ->
     capitalizedName = capitalizeString name
-    # Build a list of possible objects, filtering down the results to those returning an actual value
-    possibleObjects = (obj for obj in (globalRef[prefix + capitalizedName] for prefix in VENDOR_PREFIXES) when obj?)
+    # Build a list of possible objects, then filter null results
+    possibleObjects = VENDOR_PREFIXES
+        .map (prefix) ->
+            globalRef[prefix + capitalizedName]
+        .filter (obj) ->
+            obj?
     # Return either the first object or null
     possibleObjects[0] or null
 
 # Default action, just proxy the request
 windowProxy = (name) -> globalRef[name]
 
-# Expanded action, try to directly proxy, otherwise try to resolve with vendor prefixes
+# Expanded action, try to directly proxy,
+# otherwise try to resolve with vendor prefixes
 windowProxy.resolveVendor = (name) ->
     globalRef[name] ? resolveWindowObject name
 

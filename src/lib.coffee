@@ -34,25 +34,29 @@ ClassList = require 'class-list'
 createCountdown = (endDate, elements, options = {}) ->
     #The AttributeTemplateParser expects an array
     if not elements.length? then elements = [elements]
-    
-    #By default, add the options.finishedClass class to the elements when they are finished counting down
+
+    #Default behaviour: add the options.finishedClass class to
+    #the elements when they are finished counting down
     oldFinishedCallback = options['finishedCallback']
     options['finishedCallback'] = ->
         finishedClass = options['finishedClass'] ? "finished"
         ClassList(elem).add finishedClass for elem in elements
         oldFinishedCallback?()
-    
-    #By default, if options.loadingClass is set, remove that class from the elements when the countdown is loaded
+
+    #Default behaviour: if options.loadingClass is set,
+    #remove that class from the elements when the countdown is loaded
     if options['loadingClass']?
         oldLoadedCallback = options['loadedCallback']
         options['loadedCallback'] = ->
             ClassList(elem).remove(options['loadingClass']) for elem in elements
             oldLoadedCallback?()
-    
-    baseCountdown endDate, new AttributeTemplateParser(options).build(elements), options
+
+    baseCountdown endDate,
+        new AttributeTemplateParser(options).build(elements),
+        options
 
 
-module.exports = 
+module.exports =
     createCountdownWithEpoch: (epoch, elements, options) ->
         createCountdown epoch * 1000, elements, options
     createCountdownWithDate: createCountdown

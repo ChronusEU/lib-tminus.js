@@ -11,7 +11,9 @@ function: (() -> bool) -> () -> void
 proxyWindow = require '../window'
 
 requestAnimationFrameRef = proxyWindow.resolveVendor('requestAnimationFrame')
-cancelAnimationFrameRef = proxyWindow.resolveVendor('cancelAnimationFrame') or proxyWindow.resolveVendor('cancelRequestAnimationFrame')
+cancelAnimationFrameRef =
+    proxyWindow.resolveVendor('cancelAnimationFrame') or
+    proxyWindow.resolveVendor('cancelRequestAnimationFrame')
 INTERVAL_60_FPS = (1000 // 60)
 
 if requestAnimationFrameRef?
