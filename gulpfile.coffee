@@ -68,9 +68,9 @@ gulp.task 'lint:coffee', ->
         .pipe coffeelint()
         .pipe coffeelint.reporter()
 
-# Actively run lint and tests against modifications
+# Actively run lint against modifications
 gulp.task 'watch:dev', ->
-    gulp.watch 'src/**/*.coffee', ['test', 'lint:coffee']
+    gulp.watch 'src/**/*.coffee', ['lint:coffee']
 
 gulp.task 'watch', ['build:distribution'], ->
     gulp.watch 'src/**/*.coffee', ['build:distribution']
