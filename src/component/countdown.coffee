@@ -25,25 +25,25 @@ currentEpoch = require '../unit/epoch'
 module.exports = (endDate, updater, options = {}) ->
     endInstant = new Instant(endDate)
     
-    if isNaN endInstant.epoch 
+    if isNaN endInstant.epoch
         false
     else
         lastPeriod = new Period(Number.MAX_VALUE)
 
         loopCanceller = looper ->
-                period = new Instant(currentEpoch()).until(endInstant)
+            period = new Instant(currentEpoch()).until(endInstant)
 
-                if period.duration isnt lastPeriod.duration
-                    lastPeriod = period
+            if period.duration isnt lastPeriod.duration
+                lastPeriod = period
 
-                    #Update countdown
-                    updater(period)
+                #Update countdown
+                updater(period)
 
-                    #If done, call the possible finishing callback
-                    if period.isFinished()
-                        options['finishedCallback']?()
+                #If done, call the possible finishing callback
+                if period.isFinished()
+                    options['finishedCallback']?()
 
-                not period.isFinished()
+            not period.isFinished()
 
         options['loadedCallback']?()
 
