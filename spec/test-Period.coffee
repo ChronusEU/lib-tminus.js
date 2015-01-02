@@ -1,4 +1,9 @@
 describe 'Period', ->
+    SECOND_IN_MS = 1000
+    MINUTE_IN_MS = 60 * SECOND_IN_MS
+    HOUR_IN_MS = 60 * MINUTE_IN_MS
+    DAY_IN_MS = 24 * HOUR_IN_MS
+    
     createDate = (options) ->
         d = new Date 0
         d.setUTCFullYear options.year if options.year?
@@ -104,90 +109,90 @@ describe 'Period', ->
         expect(zero.until(testInstant).isFinished()).toEqual(false)
         
     it 'should correctly calculate the seconds partial', ->
-        [seconds] = @createPeriod(-1000).getUnit("s");
+        [seconds] = @createPeriod(-1 * SECOND_IN_MS).getUnit("s");
         expect(seconds).toEqual(0); #0 seconds
         [seconds] = @createPeriod(0).getUnit("s");
         expect(seconds).toEqual(0); #0 seconds
-        [seconds] = @createPeriod(1000).getUnit("s");
+        [seconds] = @createPeriod(SECOND_IN_MS).getUnit("s");
         expect(seconds).toEqual(1); #1 second
-        [seconds] = @createPeriod(59000).getUnit("s");
+        [seconds] = @createPeriod(59 * SECOND_IN_MS).getUnit("s");
         expect(seconds).toEqual(59); #59 seconds
-        [seconds] = @createPeriod(60000).getUnit("s");
+        [seconds] = @createPeriod(60 * SECOND_IN_MS).getUnit("s");
         expect(seconds).toEqual(0); #1 minute, 0 seconds
-        [seconds] = @createPeriod(61000).getUnit("s");
+        [seconds] = @createPeriod(61 * SECOND_IN_MS).getUnit("s");
         expect(seconds).toEqual(1); #1 minute, 1 second
         
     it 'should correctly calculate the minutes partial', ->
-        [minutes] = @createPeriod(-1000).getUnit("m");
+        [minutes] = @createPeriod(-1 * SECOND_IN_MS).getUnit("m");
         expect(minutes).toEqual(0); #0 minutes
         [minutes] = @createPeriod(0).getUnit("m");
         expect(minutes).toEqual(0); #0 minutes
-        [minutes] = @createPeriod(59000).getUnit("m");
+        [minutes] = @createPeriod(59 * SECOND_IN_MS).getUnit("m");
         expect(minutes).toEqual(0); #0 minutes, 59 seconds
-        [minutes] = @createPeriod(60000).getUnit("m");
+        [minutes] = @createPeriod(60 * SECOND_IN_MS).getUnit("m");
         expect(minutes).toEqual(1); #1 minute, 0 seconds
-        [minutes] = @createPeriod(61000).getUnit("m");
+        [minutes] = @createPeriod(61 * SECOND_IN_MS).getUnit("m");
         expect(minutes).toEqual(1); #1 minute, 1 second
-        [minutes] = @createPeriod(61 * 60 * 1000).getUnit("m");
+        [minutes] = @createPeriod(61 * MINUTE_IN_MS).getUnit("m");
         expect(minutes).toEqual(1); #1 hour, 1 minute, 0 seconds
         
     it 'should correctly calculate the hours partial', ->
-        [hours] = @createPeriod(-1000).getUnit("h");
+        [hours] = @createPeriod(-1 * SECOND_IN_MS).getUnit("h");
         expect(hours).toEqual(0); #0 hours
         [hours] = @createPeriod(0).getUnit("h");
         expect(hours).toEqual(0); #0 hours
-        [hours] = @createPeriod(59000).getUnit("h");
+        [hours] = @createPeriod(59 * SECOND_IN_MS).getUnit("h");
         expect(hours).toEqual(0); #0 hours, 0 minutes, 59 seconds
-        [hours] = @createPeriod(60000).getUnit("h");
+        [hours] = @createPeriod(60 * SECOND_IN_MS).getUnit("h");
         expect(hours).toEqual(0); #0 hours, 1 minute, 0 seconds
-        [hours] = @createPeriod(61000).getUnit("h");
+        [hours] = @createPeriod(61 * SECOND_IN_MS).getUnit("h");
         expect(hours).toEqual(0); #0 hours, 1 minute, 1 second
-        [hours] = @createPeriod(59 * 60000).getUnit("h");
+        [hours] = @createPeriod(59 * MINUTE_IN_MS).getUnit("h");
         expect(hours).toEqual(0); #0 hours, 59 minutes
-        [hours] = @createPeriod(60 * 60000).getUnit("h");
+        [hours] = @createPeriod(60 * MINUTE_IN_MS).getUnit("h");
         expect(hours).toEqual(1); #1 hour, 0 minutes
-        [hours] = @createPeriod(61 * 60000).getUnit("h");
+        [hours] = @createPeriod(61 * MINUTE_IN_MS).getUnit("h");
         expect(hours).toEqual(1); #1 hour, 1 minute
-        [hours] = @createPeriod(25 * 60 * 60000).getUnit("h");
+        [hours] = @createPeriod(25 * HOUR_IN_MS).getUnit("h");
         expect(hours).toEqual(1); #1 day, 1 hour, 0 minutes
         
     it 'should correctly calculate the days partial', ->
-        [days] = @createPeriod(-1000).getUnit("d");
+        [days] = @createPeriod(-1 * SECOND_IN_MS).getUnit("d");
         expect(days).toEqual(0); #0 days
         [days] = @createPeriod(0).getUnit("d");
         expect(days).toEqual(0); #0 days
-        [days] = @createPeriod(23 * 60 * 60000).getUnit("d");
+        [days] = @createPeriod(23 * HOUR_IN_MS).getUnit("d");
         expect(days).toEqual(0); #23 hours
-        [days] = @createPeriod(24 * 60 * 60000).getUnit("d");
+        [days] = @createPeriod(DAY_IN_MS).getUnit("d");
         expect(days).toEqual(1); #1 day
-        [days] = @createPeriod(48 * 60 * 60000).getUnit("d");
+        [days] = @createPeriod(2 * DAY_IN_MS).getUnit("d");
         expect(days).toEqual(2); #2 days
         
     it 'should correctly calculate the unbounded partials', ->
         [seconds] = @createPeriod(0).getUnit("S");
         expect(seconds).toEqual(0); #0 seconds
-        [seconds] = @createPeriod(1000).getUnit("S");
+        [seconds] = @createPeriod(SECOND_IN_MS).getUnit("S");
         expect(seconds).toEqual(1); #1 second
-        [seconds] = @createPeriod(59000).getUnit("S");
+        [seconds] = @createPeriod(59 * SECOND_IN_MS).getUnit("S");
         expect(seconds).toEqual(59); #59 seconds
-        [seconds] = @createPeriod(60000).getUnit("S");
+        [seconds] = @createPeriod(60 * SECOND_IN_MS).getUnit("S");
         expect(seconds).toEqual(60); #60 seconds
-        [seconds] = @createPeriod(120000).getUnit("S");
+        [seconds] = @createPeriod(120 * SECOND_IN_MS).getUnit("S");
         expect(seconds).toEqual(120); #120 seconds
         
-        [minutes] = @createPeriod(59000).getUnit("M");
+        [minutes] = @createPeriod(59 * SECOND_IN_MS).getUnit("M");
         expect(minutes).toEqual(0); #0 minutes, 59 seconds
-        [minutes] = @createPeriod(60000).getUnit("M");
+        [minutes] = @createPeriod(MINUTE_IN_MS).getUnit("M");
         expect(minutes).toEqual(1); #1 minute, 0 seconds
-        [minutes] = @createPeriod(61 * 60 * 1000).getUnit("M");
+        [minutes] = @createPeriod(61 * MINUTE_IN_MS).getUnit("M");
         expect(minutes).toEqual(61); #61 minutes, 0 seconds
         
-        [hours] = @createPeriod(59 * 60000).getUnit("H");
+        [hours] = @createPeriod(59 * MINUTE_IN_MS).getUnit("H");
         expect(hours).toEqual(0); #0 hours, 59 minutes
-        [hours] = @createPeriod(60 * 60000).getUnit("H");
+        [hours] = @createPeriod(HOUR_IN_MS).getUnit("H");
         expect(hours).toEqual(1); #1 hour, 0 minutes
-        [hours] = @createPeriod(120 * 60000).getUnit("H");
+        [hours] = @createPeriod(2 * HOUR_IN_MS).getUnit("H");
         expect(hours).toEqual(2); #2 hours, 0 minutes
-        [hours] = @createPeriod(25 * 60 * 60000).getUnit("H");
+        [hours] = @createPeriod(25 * HOUR_IN_MS).getUnit("H");
         expect(hours).toEqual(25); #25 hours, 0 minutes
         
