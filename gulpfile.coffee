@@ -60,7 +60,6 @@ gulp.task 'build:js-sources', ['clean'], ->
 gulp.task 'test', ->
     return gulp.src config.entry.test
         .pipe jasmine
-            includeStackTrace: true
             verbose: true
 
 gulp.task 'lint:coffee', ->
