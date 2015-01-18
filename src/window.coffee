@@ -12,8 +12,11 @@ resolveVendor: (String) -> Object
 # Possible javascript vendor prefixes
 VENDOR_PREFIXES = [
     "webkit"
+    "Webkit"
     "ms"
+    "Moz"
     "moz"
+    "O"
     "o"
 ]
 
