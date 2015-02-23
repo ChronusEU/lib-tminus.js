@@ -14,6 +14,8 @@ requestAnimationFrameRef = proxyWindow.resolveVendor('requestAnimationFrame')
 cancelAnimationFrameRef =
     proxyWindow.resolveVendor('cancelAnimationFrame') or
     proxyWindow.resolveVendor('cancelRequestAnimationFrame')
+setIntervalRef = proxyWindow.resolveVendor('setInterval')
+clearIntervalRef = proxyWindow.resolveVendor('clearInterval')
 INTERVAL_60_FPS = (1000 // 60)
 
 if requestAnimationFrameRef?
@@ -32,11 +34,11 @@ else
     #Fall back to interval-based loop if there is no requestAnimationFrame
     looperCreator = (func) ->
         if func() isnt false
-            intervalId = window.setInterval ->
+            intervalId = setIntervalRef ->
                 if func() is false
-                    window.clearInterval intervalId
+                    clearIntervalRef intervalId
             , INTERVAL_60_FPS
         
-        () -> window.clearInterval intervalId
+        () -> clearIntervalRef intervalId
 
 module.exports = looperCreator
