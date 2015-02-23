@@ -16,7 +16,7 @@ resolveVendor: (String) -> Object
 
     @param 1 name of the property to retrieve
     @return the object with the given name or any object with
-        a vendor-prefixed variation of the given name
+            a vendor-prefixed variation of the given name
 ###
 
 # Possible javascript vendor prefixes
