@@ -43,7 +43,7 @@ class AttributeTemplateParser
     RECOGNIZED_KEYS["M"] = true
     RECOGNIZED_KEYS["h"] = false
     RECOGNIZED_KEYS["H"] = false
-    RECOGNIZED_KEYS["d"] = false
+    RECOGNIZED_KEYS["D"] = false
         
     createUpdater = (key, shouldZeroPad, filteredDisplay, filteredHidable) ->
         localZeroPad = if shouldZeroPad then zeroPad else noopZeroPad
