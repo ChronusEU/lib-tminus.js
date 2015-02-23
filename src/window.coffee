@@ -40,10 +40,10 @@ resolveWindowObject = (name) ->
         .filter (obj) ->
             obj?
     # Return either the first object or null
-    possibleObjects[0] or null
+    possibleObjects[0] ? null
 
 # Default action, just proxy the request
-windowProxy = (name) -> globalRef[name]
+windowProxy = (name) -> globalRef[name] ? null
 
 # Expanded action, try to directly proxy,
 # otherwise try to resolve with vendor prefixes
