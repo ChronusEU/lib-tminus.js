@@ -1,10 +1,15 @@
 ###
-The looper component calls a provided callback function as long as that
-function has not returned false or has not been cancelled with the
+The looper module calls a provided callback function as long as the
+function has not returned false or has not been cancelled through the
 cancellation function.
 
-function: (() -> bool) -> () -> void
-    @param 1 callback, to cancel the loop the callback needs to return false
+call: (() -> bool) -> (() -> void)
+    Creates a loop that will call the provided callback function
+    at regular intervals. The loop can be stopped by calling the
+    cancellation function returned by this function or by having
+    the callback return false.
+
+    @param 1 callback
     @return function that will cancel the loop if called.
 ###
 
@@ -20,7 +25,7 @@ INTERVAL_60_FPS = (1000 // 60)
 
 if requestAnimationFrameRef?
     looperCreator = (func) ->
-        #force this variable to be in this scope so it is shared.
+        #force the cancellationId into this scope.
         cancellationId = false
         
         timerCallback = ->
