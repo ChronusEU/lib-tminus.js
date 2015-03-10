@@ -1,12 +1,22 @@
 ###
-TODO: describe
+Utility module for accessing properties of the global object.
+
+Besides directly allowing access to global properties it has a
+utility method to access vendor-prefixed properties.
+If a property does not exist, it will return null instead.
 
 call: (String) -> Object
-    @param 1
-    @return
+    Access a named property on the global object.
+    
+    @param 1 name of the property to retrieve
+    @return the object with the given name
+
 resolveVendor: (String) -> Object
-    @param 1
-    @return
+    Access a potentially vendor-prefixed property on the global object
+
+    @param 1 name of the property to retrieve
+    @return the object with the given name or any object with
+            a vendor-prefixed variation of the given name
 ###
 
 # Possible javascript vendor prefixes
@@ -26,7 +36,7 @@ capitalizeString = (str) ->
     else
         str.toUpperCase()
 
-# Create a copy of the global object.
+# Create a reference to the global object.
 globalRef = global or {}
 
 # Maps the given name to a set of vendor-prefixed names,
@@ -40,10 +50,10 @@ resolveWindowObject = (name) ->
         .filter (obj) ->
             obj?
     # Return either the first object or null
-    possibleObjects[0] or null
+    possibleObjects[0] ? null
 
 # Default action, just proxy the request
-windowProxy = (name) -> globalRef[name]
+windowProxy = (name) -> globalRef[name] ? null
 
 # Expanded action, try to directly proxy,
 # otherwise try to resolve with vendor prefixes

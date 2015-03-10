@@ -1,7 +1,7 @@
 ###
 TODO: description
 
-function: (Number | Date, (Period) -> void [, Options]) -> StateWindow | False
+function: (Number | Date, ((Period) -> void) [, Options]) -> StateWindow | False
     @param 1:
     @param 2:
     @param 3:

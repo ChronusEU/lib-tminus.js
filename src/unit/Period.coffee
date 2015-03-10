@@ -2,19 +2,20 @@
 TODO: comment
 
 class: (Number) -> Period
-    @param 1
+    @param 1 length in milliseconds
 
     isFinished: () -> bool
+        @return
 
     getUnit: (String) -> [Number, bool]
         @param 1
-            "s"
-            "S"
-            "m"
-            "M"
-            "h"
-            "H"
-            "d"
+            "s" seconds since last minute
+            "S" seconds since epoch
+            "m" minutes since last hour
+            "M" minutes since epoch
+            "h" hours since last day
+            "H" hours since epoch
+            "D" days since epoch
         @return
 ###
 
@@ -43,14 +44,14 @@ class Period
             when "S" #absolute seconds
                 extractUnit @duration, INFINITE_SECONDS , 0
             when "m" #minutes
-                extractUnit @duration, HOUR_IN_SECONDS , MINUTE_IN_SECONDS
+                extractUnit @duration, HOUR_IN_SECONDS  , MINUTE_IN_SECONDS
             when "M" #absolute minutes
                 extractUnit @duration, INFINITE_SECONDS , MINUTE_IN_SECONDS
             when "h" #hours
                 extractUnit @duration, DAY_IN_SECONDS   , HOUR_IN_SECONDS
             when "H" #absolute hours
                 extractUnit @duration, INFINITE_SECONDS , HOUR_IN_SECONDS
-            when "d" #days
+            when "D" #absolute days
                 extractUnit @duration, INFINITE_SECONDS , DAY_IN_SECONDS
             else [NaN, true]
 

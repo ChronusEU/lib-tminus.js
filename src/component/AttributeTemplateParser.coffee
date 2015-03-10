@@ -2,15 +2,19 @@
 TODO: comment
 
 class: ([Options]) -> AttributeTemplateParser
-    @param 1
+    @param 1 options for the construction of the updating method
 
-    build: (Array(DOMElement)) -> (Period) -> void
-        @param 1
+    build: (Array(DOMElement)) -> ((Period) -> void)
+        @param 1 set of DOM elements to update
         @return
+
 Options:
     displayAttribute: String
+        <>
     hidableAttribute: String
+        <>
     zeroPadOverrides: String => bool
+        <>
 ###
         
 # Array(Array(T)) -> Array(T)
@@ -43,7 +47,7 @@ class AttributeTemplateParser
     RECOGNIZED_KEYS["M"] = true
     RECOGNIZED_KEYS["h"] = false
     RECOGNIZED_KEYS["H"] = false
-    RECOGNIZED_KEYS["d"] = false
+    RECOGNIZED_KEYS["D"] = false
         
     createUpdater = (key, shouldZeroPad, filteredDisplay, filteredHidable) ->
         localZeroPad = if shouldZeroPad then zeroPad else noopZeroPad
@@ -72,8 +76,9 @@ class AttributeTemplateParser
     constructor: (options) ->
         @displayAttribute = options?.displayAttribute ? DOM_DISPLAY_ATTRIBUTE
         @hidableAttribute = options?.hidableAttribute ? DOM_HIDABLE_ATTRIBUTE
-        @zeroPadSettings = cloneObj RECOGNIZED_KEYS
         
+        # Copy keys and override zeropadding based on settings
+        @zeroPadSettings = cloneObj RECOGNIZED_KEYS
         if options?.zeroPadOverrides?
             for key, val of options.zeroPadOverrides
                 if RECOGNIZED_KEYS[key]?

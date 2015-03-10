@@ -14,13 +14,15 @@ exposed through window.TminusLib or require('lib-tminus'):
         @return See countdown.StateWindow
 
 Options:
-    finishedCallback: () -> void
     finishedClass: String
-    loadedCallback: () -> void
     loadingClass: String
+    # AttributeTemplateParser.Options
     displayAttribute: String
     hidableAttribute: String
-    zeroPadOverrides: String => bool
+    zeroPadOverrides: [String => bool]
+    # countdown.Options
+    loadedCallback: () -> void
+    finishedCallback: () -> void
 countdown.StateWindow: (Copied from component/countdown)
     getUpdatedPeriod: () -> Period
     getCountdownPeriod: () -> Period

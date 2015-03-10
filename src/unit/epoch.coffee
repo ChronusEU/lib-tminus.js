@@ -1,8 +1,12 @@
 ###
-TODO: describe
+Utility module to determine the current seconds since epoch.
 
-function: () -> Number
-    @return current epoch in ms with the highest precision possible
+Will use the HTML5 'performance' API if it is supported by the
+current environment.
+
+call: () -> Number
+    @return current time since UNIX epoch in ms with 
+    		the highest precision possible
 ###
 
 proxyWindow = require '../window'

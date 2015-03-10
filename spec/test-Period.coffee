@@ -45,7 +45,7 @@ describe 'Period', ->
         expect(sig).toEqual true
         
         #days should be 0
-        [days, sig] = period.getUnit "d"
+        [days, sig] = period.getUnit "D"
         expect(days).toEqual 0
         expect(sig).toEqual false
     
@@ -157,15 +157,15 @@ describe 'Period', ->
         expect(hours).toEqual(1); #1 day, 1 hour, 0 minutes
         
     it 'should correctly calculate the days partial', ->
-        [days] = @createPeriod(-1 * SECOND_IN_MS).getUnit("d");
+        [days] = @createPeriod(-1 * SECOND_IN_MS).getUnit("D");
         expect(days).toEqual(0); #0 days
-        [days] = @createPeriod(0).getUnit("d");
+        [days] = @createPeriod(0).getUnit("D");
         expect(days).toEqual(0); #0 days
-        [days] = @createPeriod(23 * HOUR_IN_MS).getUnit("d");
+        [days] = @createPeriod(23 * HOUR_IN_MS).getUnit("D");
         expect(days).toEqual(0); #23 hours
-        [days] = @createPeriod(DAY_IN_MS).getUnit("d");
+        [days] = @createPeriod(DAY_IN_MS).getUnit("D");
         expect(days).toEqual(1); #1 day
-        [days] = @createPeriod(2 * DAY_IN_MS).getUnit("d");
+        [days] = @createPeriod(2 * DAY_IN_MS).getUnit("D");
         expect(days).toEqual(2); #2 days
         
     it 'should correctly calculate the unbounded partials', ->
@@ -196,3 +196,15 @@ describe 'Period', ->
         [hours] = @createPeriod(25 * HOUR_IN_MS).getUnit("H");
         expect(hours).toEqual(25); #25 hours, 0 minutes
         
+        [days] = @createPeriod(-1 * SECOND_IN_MS).getUnit("D");
+        expect(days).toEqual(0); #0 days
+        [days] = @createPeriod(0).getUnit("D");
+        expect(days).toEqual(0); #0 days
+        [days] = @createPeriod(23 * HOUR_IN_MS).getUnit("D");
+        expect(days).toEqual(0); #23 hours
+        [days] = @createPeriod(DAY_IN_MS).getUnit("D");
+        expect(days).toEqual(1); #1 day
+        [days] = @createPeriod(2 * DAY_IN_MS).getUnit("D");
+        expect(days).toEqual(2); #2 days
+        [days] = @createPeriod(367 * DAY_IN_MS).getUnit("D");
+        expect(days).toEqual(367); #367 days

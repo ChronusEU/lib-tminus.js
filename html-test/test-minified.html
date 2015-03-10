@@ -5,8 +5,8 @@
     
     <body>
         <div class="loading countdown" id="countdown">
-            <span data-tminus-hide-if-zero="d">
-                <span data-tminus-unit="d"></span>d 
+            <span data-tminus-hide-if-zero="D">
+                <span data-tminus-unit="D"></span>d 
             </span>
             <span data-tminus-unit="h"></span>h 
             <span data-tminus-unit="m"></span>m 
@@ -14,8 +14,8 @@
         </div>
         
         <script>
-            var oneHour = new Date().getTime() + (1000 * 60 * 60);
-            TminusLib.createCountdownWithDate(oneHour, document.getElementById('countdown'));
+            var twentyFiveHours = new Date().getTime() + (1000 * 60 * 60* 25);
+            TminusLib.createCountdownWithDate(twentyFiveHours, document.getElementById('countdown'));
         </script>
     </body>
 </html>
