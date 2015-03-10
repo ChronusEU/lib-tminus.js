@@ -2,9 +2,10 @@
 TODO: comment
 
 class: (Number) -> Period
-    @param 1
+    @param 1 length in milliseconds
 
     isFinished: () -> bool
+        @return
 
     getUnit: (String) -> [Number, bool]
         @param 1
