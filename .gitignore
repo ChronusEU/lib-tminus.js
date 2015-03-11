@@ -3,5 +3,9 @@
 # https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git-
 node_modules
 
-## No not commit generated js
+## Do not commit generated js
 gen-js
+
+## Do not commit temporary and dependency directories
+tmp
+typings
