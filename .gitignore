@@ -9,3 +9,7 @@ gen-js
 ## Do not commit temporary and dependency directories
 tmp
 typings
+
+## Ignore any converted source files
+src/**/*.js
+src/**/*.js.map
