@@ -19,6 +19,12 @@
     },
     "gulp-rename/gulp-rename.d.ts": {
       "commit": "c594427c40354eae9dc618c50dc1c3d83da477b5"
+    },
+    "jasmine/jasmine.d.ts": {
+      "commit": "c594427c40354eae9dc618c50dc1c3d83da477b5"
+    },
+    "jasmine-fixture/jasmine-fixture.d.ts": {
+      "commit": "0d211fb28df45f1a079c972f0dc87deab0124994"
     }
   }
 }

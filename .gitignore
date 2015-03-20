@@ -5,6 +5,7 @@ node_modules
 
 ## Do not commit generated js
 gen-js
+**/*.xml
 
 ## Do not commit temporary and dependency directories
 tmp
@@ -13,3 +14,8 @@ typings
 ## Ignore any converted source files
 src/**/*.js
 src/**/*.js.map
+spec/**/*.js
+!spec/lib/**/*.js
+spec/**/*.js.map
+gulpfile.js
+gulpfile.js.map
