@@ -17,7 +17,7 @@ var plumber = require('gulp-plumber');
 var ts = require('gulp-typescript');
 var merge = require('merge2');
 var sourcemaps = require('gulp-sourcemaps');
-var clone = require("./src/util/clone");
+var copyMap = require("./src/util/copyMap");
 
 
 var pkg = require('./package.json');
@@ -55,7 +55,7 @@ interface ExtendedBrowserifyOptions extends BrowserifyOptions {
 }
 
 function createBrowserifyTransform(opts:ExtendedBrowserifyOptions):NodeJS.ReadWriteStream {
-    var nOpts = clone(opts);
+    var nOpts = copyMap(opts);
 
     nOpts.debug = true; //Get sourcemaps
 
