@@ -1,4 +1,5 @@
 /// <reference path="./typings/tsd.d.ts" />
+/// <reference path="src\decl\Dict.d.ts"/>
 'use strict';
 
 import gulp = require('gulp');
@@ -14,6 +15,9 @@ var header = require('gulp-header');
 var del = require('del');
 var plumber = require('gulp-plumber');
 var ts = require('gulp-typescript');
+var merge = require('merge2');
+var sourcemaps = require('gulp-sourcemaps');
+var clone = require("./src/util/clone");
 
 
 var pkg = require('./package.json');
@@ -27,6 +31,42 @@ var banner = `
 
 `;
 
+interface BrowserifyOptions {
+    entries?: string[];
+    noParse?: any;
+    extensions?: string[];
+    basedir?: string;
+    paths?: string[];
+    commondir?: string;
+    fullPaths?: boolean;
+    builtins?: string[];
+    bundleExternal?: boolean;
+    insertGlobals?: boolean;
+    detectGlobals?: boolean;
+    debug?: boolean;
+    standalone?: string;
+    insertGlobalVars?: Dict<string>;
+    externalRequireName?: string;
+}
+
+interface ExtendedBrowserifyOptions extends BrowserifyOptions {
+    originFile: string;
+    targetFileName: string;
+}
+
+function createBrowserifyTransform(opts:ExtendedBrowserifyOptions):NodeJS.ReadWriteStream {
+    var nOpts = clone(opts);
+
+    nOpts.debug = true; //Get sourcemaps
+
+    return browserify(nOpts)
+        .add(nOpts.originFile)
+        .plugin('tsify')
+        .bundle()
+        .pipe(source(nOpts.targetFileName))
+        .pipe(buffer());
+}
+
 var config = {
     globalName: 'TminusLib',
     dist: 'lib-tminus.js',
@@ -36,23 +76,23 @@ var config = {
         jasmine: './spec/SpecRunner.html',
         sources: './src/**/*.ts'
     },
-    distributionTarget: 'dist',
-    generatedSourceTarget: 'gen-js'
+    target: {
+        dist: 'dist',
+        genJS: 'gen-js'
+    }
 };
 
 gulp.task('test:build-specs', ['clean'], () => {
-    return browserify({
-        entries: [config.entry.test]
-    }).plugin('tsify')
-        .bundle()
+    return createBrowserifyTransform({
+        originFile: config.entry.test,
+        targetFileName: 'specs.js'
+    })
         .pipe(plumber())
-        .pipe(source('specs.js'))
-        .pipe(buffer())
-        .pipe(gulp.dest(config.distributionTarget));
+        .pipe(gulp.dest(config.target.dist));
 });
 
 gulp.task('clean', (cb) => {
-    return del([config.distributionTarget, config.generatedSourceTarget], cb);
+    return del([config.target.dist, config.target.genJS, '**/*.xml', './tmp'], cb);
 });
 
 gulp.task('test', ['test:build-specs'], () => {
@@ -67,21 +107,23 @@ gulp.task('script:generate-js', ['clean'], () => {
             module: 'commonjs'
         }));
 
-    //TODO: figure out what to do with declarations
-    return tsResult.js.pipe(gulp.dest(config.generatedSourceTarget));
+    return merge([
+        tsResult.js.pipe(gulp.dest(config.target.genJS)),
+        tsResult.dts.pipe(gulp.dest(config.target.genJS)),
+        gulp.src('./src/**/*.d.ts').pipe(gulp.dest(config.target.genJS))
+    ]);
 });
 
 gulp.task('script:build', ['clean'], () => {
-    return browserify({
-        standalone: config.globalName,
-        entries: [config.entry.lib]
-    }).plugin('tsify')
-        .bundle()
+    return createBrowserifyTransform({
+        originFile: config.entry.lib,
+        targetFileName: config.dist,
+        standalone: config.globalName
+    })
         .pipe(plumber())
-        .pipe(source(config.dist))
+        .pipe(sourcemaps.init({loadMaps: true}))
         .pipe(derequire())
-        .pipe(buffer())
-        .pipe(gulp.dest(config.distributionTarget))
+        .pipe(gulp.dest(config.target.dist))
         .pipe(header(banner, {
             pkg: pkg
         }))
@@ -91,7 +133,9 @@ gulp.task('script:build', ['clean'], () => {
         .pipe(uglify({
             preserveComments: saveLicense
         }))
-        .pipe(gulp.dest(config.distributionTarget));
+        .pipe(sourcemaps.write('./'))
+        .pipe(plumber.stop())
+        .pipe(gulp.dest(config.target.dist));
 });
 
 gulp.task('default', ['script:build']);

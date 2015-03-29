@@ -25,6 +25,9 @@
     },
     "jasmine-fixture/jasmine-fixture.d.ts": {
       "commit": "0d211fb28df45f1a079c972f0dc87deab0124994"
+    },
+    "jquery/jquery.d.ts": {
+      "commit": "32f0a90dab26f70b206407ac24d4d622d0f0f408"
     }
   }
 }
