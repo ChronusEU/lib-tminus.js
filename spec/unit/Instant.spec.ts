@@ -2,6 +2,7 @@
 'use strict';
 
 import Instant = require('../../src/unit/Instant');
+import Period = require('../../src/unit/Period');
 
 describe("Instant", () => {
     it('should allow construction with a number', function () {
@@ -28,4 +29,13 @@ describe("Instant", () => {
         expect(Instant.make(Number.POSITIVE_INFINITY).isValid()).toEqual(false);
         expect(Instant.make(Number.NEGATIVE_INFINITY).isValid()).toEqual(false);
     });
+
+    it("should return valid results for Instant.add", function () {
+        var p = Period.ofSeconds(10);
+        var i = Instant.make(121); //No second aligned instant
+        var i2 = i.add(p);
+        expect(i2.isValid()).toEqual(true);
+        //The period between Instant and Instant.add should be equal to the original period
+        expect(i.until(i2).eq(p)).toEqual(true);
+    })
 });

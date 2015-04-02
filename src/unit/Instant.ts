@@ -3,7 +3,7 @@
 import Period = require('./Period');
 
 /**
- * An Instant represents a point in time.
+ * An Instant represents an immutable point in time.
  *
  * It can represent any millisecond that is representable as an offset of Epoch time.
  *
@@ -47,6 +47,17 @@ class Instant {
      */
     until(otherInstant:Instant):Period.Period {
         return Period.ofMillis(otherInstant.epoch - this.epoch);
+    }
+
+    /**
+     * Create a new Instant that is offset from this Instant by the given Period.
+     *
+     * This method follow the following contract: Instant.until(Instant.add(Period)).eq(Period)
+     *
+     * @param {Period} period offset of the returned Instant relative to this Instant
+     */
+    add(period:Period.Period):Instant {
+        return Instant.make(this.epoch + period.getUnit(Period.TimeKey.S).value * 1000);
     }
 
     /**
