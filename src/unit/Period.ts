@@ -55,7 +55,7 @@ var DAY_IN_SECONDS = HOUR_IN_SECONDS * 24;
 var INFINITE_SECONDS = Number.MAX_VALUE;
 
 /**
- * A period represents a positive length of time in seconds.
+ * A period represents an immutable positive length of time in seconds.
  *
  * This class has a number of methods to convert its length to different time scales,
  * see {@see Period#getUnit} for more information.
