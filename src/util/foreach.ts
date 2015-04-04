@@ -3,6 +3,7 @@
 
 /**
  * Utility function which will iterate through the given array and call the callback within the given scope.
+ * Elements of the given array will provided to the callback in sequence.
  *
  * This method is used instead of {@see Array#forEach} since there are array-like structures which do not have
  * this method and calling the prototype relies on implementation details.
