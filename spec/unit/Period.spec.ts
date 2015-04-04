@@ -57,6 +57,19 @@ describe("Period", () => {
         expect(tmp.significant).toEqual(false);
     });
 
+    it("should return the correct values for .toSeconds", function () {
+        //Check seconds equality
+        var p = Period.ofSeconds(123);
+        expect(p.toSeconds()).toEqual(123);
+
+        //Milliseconds should get rounded down to whole seconds
+        p = Period.ofMillis(2222);
+        expect(p.toSeconds()).toEqual(2);
+
+        //The returned value for absolute seconds should equal toSeconds
+        expect(p.getUnit(Period.TimeKey.S).value).toEqual(p.toSeconds());
+    });
+
     it("should be equivalently constructed", function () {
         //Ensure the equality checker is working as it should
         var p = Period.ofSeconds(123);

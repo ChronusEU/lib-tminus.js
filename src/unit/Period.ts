@@ -85,6 +85,15 @@ export class Period {
     }
 
     /**
+     * Alias for Period.getUnit(TimeKey.S).value
+     *
+     * Returns the total length of this period in seconds.
+     */
+    toSeconds():number {
+        return this.getUnit(TimeKey.S).value;
+    }
+
+    /**
      * Method to convert this period into other units of time.
      *
      * See {@see TimeKey} for the supported time units.

@@ -57,7 +57,7 @@ class Instant {
      * @param {Period} period offset of the returned Instant relative to this Instant
      */
     add(period:Period.Period):Instant {
-        return Instant.make(this.epoch + period.getUnit(Period.TimeKey.S).value * 1000);
+        return Instant.make(this.epoch + period.toSeconds() * 1000);
     }
 
     /**
