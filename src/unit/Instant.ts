@@ -6,9 +6,6 @@ import Period = require('./Period');
  * An Instant represents an immutable point in time.
  *
  * It can represent any millisecond that is representable as an offset of Epoch time.
- *
- * @author http://github.com/Kiskae
- * @version 1
  */
 class Instant {
     /**

@@ -1,30 +1,19 @@
 'use strict';
 
-import prefixed = require("./prefixed");
-
-var perf:Performance = prefixed<Performance>('performance');
-
 /**
  * A utility function that returns the current number of seconds since zero epoch. (midnight UTC, 1st Jan 1970)
  *
- * Where possible it will use the high-resolution HTML5 performance api,
- * otherwise it will fall back to Date-based methods.
+ * This function is not implemented by the HTML5 performance API since the resolution is not required
+ * and is it slower in practise than other methods: http://jsperf.com/current-date
  */
 var epoch:() => number;
 
-if (perf && perf.timing && typeof perf.now === "function") {
-    //HTML5 performance API is available
-    epoch = () => {
-        return perf.now() + perf.timing.navigationStart;
-    };
+//Attempt Date.now, otherwise use Date.getTime fallback
+if (typeof Date.now === "function") {
+    epoch = Date.now;
 } else {
-    //Attempt Date.now, otherwise use Date.getTime fallback
-    if (typeof Date.now === "function") {
-        epoch = Date.now;
-    } else {
-        epoch = () => {
-            return new Date().getTime();
-        }
+    epoch = () => {
+        return new Date().getTime();
     }
 }
 

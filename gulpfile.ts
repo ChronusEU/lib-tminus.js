@@ -19,7 +19,6 @@ var merge = require('merge2');
 var sourcemaps = require('gulp-sourcemaps');
 var copyMap = require("./src/util/copyMap");
 
-
 var pkg = require('./package.json');
 var banner = `
 /*!

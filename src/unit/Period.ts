@@ -8,8 +8,6 @@
  *
  * Currently supported units: Seconds, Minutes, Hours and Days.
  *
- * @author http://github.com/Kiskae
- * @version 1
  * @see {Period#getUnit}
  */
 export enum TimeKey
@@ -59,9 +57,6 @@ var INFINITE_SECONDS = Number.MAX_VALUE;
  *
  * This class has a number of methods to convert its length to different time scales,
  * see {@see Period#getUnit} for more information.
- *
- * @author http://github.com/Kiskae
- * @version 1
  */
 export class Period {
     private seconds:number;

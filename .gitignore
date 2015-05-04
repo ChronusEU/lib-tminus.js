@@ -4,12 +4,9 @@
 node_modules
 .*
 
-## Do not commit generated js
-gen-js
-**/*.xml
-
 ## Do not commit temporary and dependency directories
 tmp
+**/*.xml
 typings
 
 ## Ignore any converted source files
