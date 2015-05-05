@@ -1,4 +1,4 @@
-/// <reference path="../../typings/tsd.d.ts" />
+/// <reference path="../../typings/jasmine/jasmine.d.ts" />
 'use strict';
 
 interface DateParams {

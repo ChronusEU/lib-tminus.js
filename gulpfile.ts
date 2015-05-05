@@ -1,5 +1,8 @@
-/// <reference path="./typings/tsd.d.ts" />
+/// <reference path="./typings/browserify/browserify.d.ts" />
+/// <reference path="./typings/gulp/gulp.d.ts" />
+/// <reference path="./typings/gulp-rename/gulp-rename.d.ts" />
 /// <reference path="src\decl\Dict.d.ts"/>
+
 'use strict';
 
 import gulp = require('gulp');
@@ -91,7 +94,7 @@ gulp.task('test:build-specs', ['clean'], () => {
 });
 
 gulp.task('clean', (cb) => {
-    return del([config.target.dist, config.target.genJS, '**/*.xml', './tmp'], cb);
+    return del([config.target.dist, config.target.genJS, '**/*.xml'], cb);
 });
 
 gulp.task('test', ['test:build-specs'], () => {

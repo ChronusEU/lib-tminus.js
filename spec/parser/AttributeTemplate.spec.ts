@@ -1,4 +1,6 @@
-/// <reference path="../../typings/tsd.d.ts" />
+/// <reference path="../../typings/jasmine/jasmine.d.ts" />
+/// <reference path="../../typings/jasmine-fixture/jasmine-fixture.d.ts" />
+/// <reference path="../../typings/jquery/jquery.d.ts" />
 'use strict';
 
 import ATP = require("../../src/parser/AttributeTemplateParser");
