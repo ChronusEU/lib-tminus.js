@@ -4,8 +4,9 @@
   "description": "A lightweight countdown library for the browser",
   "main": "gen-js/lib.js",
   "scripts": {
-    "test": "gulp --gulpfile gulpfile.ts test",
-    "prepublish": "gulp --gulpfile gulpfile.ts script:generate-js"
+    "install": "tsd reinstall",
+    "test": "gulp test",
+    "prepublish": "gulp script:generate-js"
   },
   "author": "Kiskae",
   "license": "MIT",

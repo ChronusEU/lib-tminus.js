@@ -5,19 +5,10 @@
   "path": "typings",
   "bundle": "typings/tsd.d.ts",
   "installed": {
-    "gulp/gulp.d.ts": {
-      "commit": "feb6d404c10c57020758c4e4b1f3939fabf19b42"
-    },
     "node/node.d.ts": {
       "commit": "feb6d404c10c57020758c4e4b1f3939fabf19b42"
     },
-    "browserify/browserify.d.ts": {
-      "commit": "c594427c40354eae9dc618c50dc1c3d83da477b5"
-    },
     "vinyl-source-stream/vinyl-source-stream.d.ts": {
-      "commit": "c594427c40354eae9dc618c50dc1c3d83da477b5"
-    },
-    "gulp-rename/gulp-rename.d.ts": {
       "commit": "c594427c40354eae9dc618c50dc1c3d83da477b5"
     },
     "jasmine/jasmine.d.ts": {

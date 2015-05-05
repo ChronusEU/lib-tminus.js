@@ -1,13 +1,7 @@
-/// <reference path="./typings/browserify/browserify.d.ts" />
-/// <reference path="./typings/gulp/gulp.d.ts" />
-/// <reference path="./typings/gulp-rename/gulp-rename.d.ts" />
-/// <reference path="src\decl\Dict.d.ts"/>
-
 'use strict';
-
-import gulp = require('gulp');
-import browserify = require('browserify');
-import rename = require('gulp-rename');
+var gulp = require('gulp');
+var browserify = require('browserify');
+var rename = require('gulp-rename');
 var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
 var uglify = require('gulp-uglify');
@@ -20,52 +14,23 @@ var plumber = require('gulp-plumber');
 var ts = require('gulp-typescript');
 var merge = require('merge2');
 var sourcemaps = require('gulp-sourcemaps');
-var copyMap = require("./src/util/copyMap");
-
 var pkg = require('./package.json');
-var banner = `
-/*!
- * <%= pkg.name %> - <%= pkg.description %>
- * @version v<%= pkg.version %>
- * @link <%= pkg.homepage %>
- * @license <%= pkg.license %>
- */
 
-`;
+var banner =
+    "/*!\n" +
+    " * <%= pkg.name %> - <%= pkg.description %>\n" +
+    " * @version v<%= pkg.version %>\n" +
+    " * @link <%= pkg.homepage %>\n" +
+    " * @license <%= pkg.license %>\n" +
+    " */\n\n";
 
-interface BrowserifyOptions {
-    entries?: string[];
-    noParse?: any;
-    extensions?: string[];
-    basedir?: string;
-    paths?: string[];
-    commondir?: string;
-    fullPaths?: boolean;
-    builtins?: string[];
-    bundleExternal?: boolean;
-    insertGlobals?: boolean;
-    detectGlobals?: boolean;
-    debug?: boolean;
-    standalone?: string;
-    insertGlobalVars?: Dict<string>;
-    externalRequireName?: string;
-}
-
-interface ExtendedBrowserifyOptions extends BrowserifyOptions {
-    originFile: string;
-    targetFileName: string;
-}
-
-function createBrowserifyTransform(opts:ExtendedBrowserifyOptions):NodeJS.ReadWriteStream {
-    var nOpts = copyMap(opts);
-
-    nOpts.debug = true; //Get sourcemaps
-
-    return browserify(nOpts)
-        .add(nOpts.originFile)
+function createBrowserifyTransform(opts) {
+    opts.debug = true;
+    return browserify(opts)
+        .add(opts.originFile)
         .plugin('tsify')
         .bundle()
-        .pipe(source(nOpts.targetFileName))
+        .pipe(source(opts.targetFileName))
         .pipe(buffer());
 }
 
@@ -80,11 +45,11 @@ var config = {
     },
     target: {
         dist: 'dist',
-        genJS: 'gen-js'
+        genJS: 'src-gen'
     }
 };
 
-gulp.task('test:build-specs', ['clean'], () => {
+gulp.task('test:build-specs', ['clean'], function () {
     return createBrowserifyTransform({
         originFile: config.entry.test,
         targetFileName: 'specs.js'
@@ -93,15 +58,16 @@ gulp.task('test:build-specs', ['clean'], () => {
         .pipe(gulp.dest(config.target.dist));
 });
 
-gulp.task('clean', (cb) => {
+gulp.task('clean', function (cb) {
     return del([config.target.dist, config.target.genJS, '**/*.xml'], cb);
 });
 
-gulp.task('test', ['test:build-specs'], () => {
-    return gulp.src(config.entry.jasmine).pipe(jasminePhantomJs());
+gulp.task('test', ['test:build-specs'], function () {
+    return gulp.src(config.entry.jasmine)
+        .pipe(jasminePhantomJs());
 });
 
-gulp.task('script:generate-js', ['clean'], () => {
+gulp.task('script:generate-js', ['clean'], function () {
     var tsResult = gulp.src(config.entry.sources)
         .pipe(plumber())
         .pipe(ts({
@@ -116,7 +82,7 @@ gulp.task('script:generate-js', ['clean'], () => {
     ]);
 });
 
-gulp.task('script:build', ['clean'], () => {
+gulp.task('script:build', ['clean'], function () {
     return createBrowserifyTransform({
         originFile: config.entry.lib,
         targetFileName: config.dist,
