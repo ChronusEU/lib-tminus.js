@@ -6,7 +6,7 @@
  * Elements of the given array will provided to the callback in sequence.
  *
  * This method is used instead of {@see Array#forEach} since there are array-like structures which do not have
- * this method and calling the prototype relies on implementation details.
+ * this method and calling the function through the prototype relies on implementation details.
  *
  * @param {Array} array array of values to iterate over
  * @param {Function} callback callback to call on each element

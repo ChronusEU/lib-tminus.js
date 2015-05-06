@@ -61,7 +61,7 @@ class Instant {
      * Factory method to create new Instant objects using either the number of milliseconds since zero epoch or
      * a javascript Date object.
      *
-     * @param {number} date point in time that the new Instant will refer to.
+     * @param {number|Date} date point in time that the new Instant will refer to.
      */
     static make(date:number|Date):Instant {
         if (typeof date === "number") {
