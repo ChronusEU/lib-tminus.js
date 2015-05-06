@@ -10,10 +10,11 @@
   "ignore": [
     "**/.*",
     "node_modules",
-    "bower_components",
     "spec",
     "src",
-    "gen-js",
-    "typings"
+    "src-gen",
+    "typings",
+    "gulpfile.js",
+    "tsd.json"
   ]
 }

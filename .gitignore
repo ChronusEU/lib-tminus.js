@@ -8,3 +8,4 @@ node_modules
 tmp
 **/*.xml
 typings
+src-gen

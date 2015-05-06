@@ -2,7 +2,7 @@
   "name": "lib-tminus",
   "version": "0.0.2",
   "description": "A lightweight countdown library for the browser",
-  "main": "gen-js/lib.js",
+  "main": "src-gen/lib.js",
   "scripts": {
     "install": "tsd reinstall",
     "test": "gulp test",
@@ -16,7 +16,7 @@
   },
   "homepage": "https://github.com/Kiskae/lib-tminus.js",
   "devDependencies": {
-    "browserify": "^9.0.3",
+    "browserify": "^9.0.8",
     "del": "^1.1.1",
     "gulp": "^3.8.11",
     "gulp-derequire": "^2.1.0",

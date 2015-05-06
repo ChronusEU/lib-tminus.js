@@ -1,5 +1,9 @@
+/**
+ * Mapping file to translate nodeJS "require" to typescript definitions.
+ */
+
 //-- ROOT
-declare module "lib-tminus" { //Possibly auto-generate title
+declare module "lib-tminus" {
     import Tmp = require("lib");
     export = Tmp;
 }
