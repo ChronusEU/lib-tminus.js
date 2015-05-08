@@ -9,14 +9,21 @@ var pClearInterval = prefixed<(handle:number)=>void>('clearInterval');
 var TIMEOUT_60_FPS_IN_MS = Math.floor(1000 / 60);
 
 /**
+ * This Looper uses the setInterval/clearInterval API as its implementation.
  *
+ * The interval at which the function is called is set to {@see TIMEOUT_60_FPS_IN_MS}
+ *
+ * If a window is hidden then most browsers will limit the rate of invocation of this Looper to once every second.
  */
 class TimeoutLooper implements Looper.Looper {
     private handle:number;
 
     /**
+     * Create a setInterval-based Looper that will invoke the given callback.
      *
-     * @param {Function} cb
+     * If the callback returns false, the Looper will cancel any future invocations.
+     *
+     * @param {Function} cb callback that will be invoked by this looper.
      */
     constructor(private cb:() => boolean) {
         this.handle = -1;
