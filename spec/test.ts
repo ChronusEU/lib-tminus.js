@@ -4,6 +4,7 @@
 //Bug in PhantomJS requires this polyfill
 require("./BindPolyfill");
 
+require("./lib.spec");
 require("./unit/Instant.spec");
 require("./unit/Period.spec");
 require("./countdown/Countdown.spec");

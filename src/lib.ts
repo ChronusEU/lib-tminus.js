@@ -114,5 +114,5 @@ export function withSeconds(epoch:number,
 export function withMillis(date:Date|number,
                            roots:HTMLElement|ArrayLike<HTMLElement>,
                            options?:DefaultOptions):Countdown.Controller {
-    return createCountdown(typeof date === "number" ? date : date.getTime(), roots, options);
+    return createCountdown(Number(date), roots, options);
 }
