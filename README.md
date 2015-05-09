@@ -1,4 +1,4 @@
-lib-tminus.js [![Build Status](https://travis-ci.org/Kiskae/lib-tminus.js.svg)](https://travis-ci.org/Kiskae/lib-tminus.js)
+lib-tminus.js [![Build Status](https://travis-ci.org/ChronusEU/lib-tminus.js.svg)](https://travis-ci.org/ChronusEU/lib-tminus.js)
 =============
 
 A lightweight countdown library for the browser. 
@@ -11,7 +11,7 @@ This library is entirely self-contained once built, it does however use a couple
 - [HTML5 data attributes](http://caniuse.com/#feat=dataset) (Used by the default build for formatting, it is possible to replace this by building a custom version of the library. See [#commonjs-modules](#commonjs-modules))
 - [querySelectorAll](http://caniuse.com/#feat=queryselector) (Like the data attributes, used for the default build for formatting. Can be replaced the same way.) 
 
-Use as an independant library
+Use as an independent library
 -------------
 Simply include the file `dist/lib-tminus.js` or `dist/lib-tminus.min.js` in your project.
 These files contain all the code necessary, exposing the object `TminusLib` in the global scope.

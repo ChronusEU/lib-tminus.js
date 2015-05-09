@@ -7,12 +7,13 @@
   ],
   "description": "A lightweight countdown library for the browser",
   "license": "MIT",
+  "moduleType": [
+    "globals",
+    "amd",
+    "node"
+  ],
   "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "spec",
-    "src",
-    "gen-js"
+    "*",
+    "!dist/*"
   ]
 }
