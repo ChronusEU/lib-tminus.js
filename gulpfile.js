@@ -45,7 +45,8 @@ var config = {
     },
     target: {
         dist: 'dist',
-        genJS: 'src-gen'
+        genJS: 'src-gen',
+        tmp: 'tmp'
     }
 };
 
@@ -55,7 +56,7 @@ gulp.task('test:build-specs', ['clean'], function () {
         targetFileName: 'specs.js'
     })
         .pipe(plumber())
-        .pipe(gulp.dest(config.target.dist));
+        .pipe(gulp.dest(config.target.tmp));
 });
 
 gulp.task('clean', function (cb) {
