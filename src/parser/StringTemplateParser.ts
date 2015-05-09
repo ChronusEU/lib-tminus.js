@@ -1,5 +1,7 @@
 'use strict';
 
+//TODO: proof of concept, not suitable for use at this point.
+
 import Parser = require('./Parser');
 import Period = require('../unit/Period');
 import ATParser = require('./AttributeTemplateParser');
@@ -18,7 +20,10 @@ function transformTemplateDOM<E extends HTMLElement>(root2:E, template:string):E
 }
 
 /**
+ * This parser uses a template provided as a string to set up the countdown structure.
  *
+ * Internally uses an AttributeTemplateParser to create the actual updating code after generating a suitable DOM
+ * based on the given template.
  */
 export class StringTemplateParser implements Parser.Parser {
     private templateDOM:HTMLSpanElement;
