@@ -1,6 +1,7 @@
 'use strict';
 
 var windowRef = window;
+var FUNCTION_BIND_AVAILABLE = !!(Function.prototype.bind);
 
 var VENDOR_PREFIXES:string[] = [
     "webkit",
@@ -57,7 +58,7 @@ function Prefixed<T>(str:string, obj:any = windowRef, scope:any = obj):T {
         target = findPrefixedObject(str, obj);
     }
 
-    if (typeof target === "function") {
+    if (typeof target === "function" && FUNCTION_BIND_AVAILABLE) {
         return (<Function>target).bind(scope);
     } else {
         return target;
