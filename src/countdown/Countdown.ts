@@ -50,6 +50,17 @@ export interface Controller {
     startCountdown(): void;
 }
 
+//Utility function to generate the toString function for the Controller
+function generateToString(endInstant:Instant, getPeriod:()=> Period.Period, looper: Looper.Looper):()=>string {
+    return () => {
+        return `Countdown{` +
+            `until=${endInstant.toDate()},` +
+            `timeLeft=${getPeriod().toSeconds()}s,` +
+            `active=${looper.isRunning()}`+
+            `}`;
+    };
+}
+
 export type Updater = (period:Period.Period) => any;
 
 /**
@@ -96,10 +107,12 @@ export function create(endDate:Date, updater:Updater, opts:Options):Controller {
             opts.loadedCallback();
         }
 
+        var getUpdatedPeriod = () => {
+            return Instant.make(epoch()).until(endInstant);
+        };
+
         return {
-            getUpdatedPeriod: () => {
-                return Instant.make(epoch()).until(endInstant);
-            },
+            getUpdatedPeriod: getUpdatedPeriod,
             getCountdownPeriod: () => {
                 return prevPeriod;
             },
@@ -110,7 +123,8 @@ export function create(endDate:Date, updater:Updater, opts:Options):Controller {
                 //By setting prevPeriod, we force the updater to be called.
                 prevPeriod = Period.ofMillis(Number.MAX_VALUE);
                 looper.start();
-            }
+            },
+            toString: generateToString(endInstant, getUpdatedPeriod, looper)
         }
     } else {
         throw new Error("Invalid target date passed to countdown");
