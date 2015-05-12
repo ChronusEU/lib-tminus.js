@@ -28,7 +28,22 @@ function convertToArray<U>(input:U|ArrayLike<U>):ArrayLike<U> {
     }
 }
 
-export interface DefaultOptions extends Countdown.Options, Parser.ParserOptions {
+export interface LibOptions extends Countdown.Options, Parser.ParserOptions {
+    /**
+     * Instant that the countdown will be counting down to.
+     *
+     * Accepts either a Date instance or milliseconds since UNIX epoch (1st Jan 1970 00:00 UTC)
+     */
+    endTime: number|Date
+
+    /**
+     * DOM element(s) that will be injected with the countdown.
+     *
+     * By default the {@see AttributeTemplateParser} is used, which uses data contained in the pre-existing
+     * DOM tree to inject the countdown.
+     */
+    target: HTMLElement|ArrayLike<HTMLElement>
+
     /**
      * Class name that should be added to the provided root elements once the countdown has finished.
      *
@@ -52,7 +67,7 @@ export interface DefaultOptions extends Countdown.Options, Parser.ParserOptions 
  */
 function createCountdown(milliSeconds:number,
                          roots:HTMLElement|ArrayLike<HTMLElement>,
-                         options:DefaultOptions = {}):Countdown.Controller {
+                         options:LibOptions):Countdown.Controller {
     var rootArray = convertToArray(roots);
 
     //Default behavior, add class on finish
@@ -92,27 +107,8 @@ function createCountdown(milliSeconds:number,
 }
 
 /**
- * Initialize a countdown that will update a template within the given roots.
- *
- * @param {number} epoch time in seconds since UNIX epoch as target for the countdown.
- * @param {HTMLElement|Array} roots Elements that contain a template that needs to be updated based on the countdown.
- * @param {object} options Options to modify some properties of the countdown.
+ * Entry point for the library, initializes a countdown using the target DOM and moment specified in the options.
  */
-export function withSeconds(epoch:number,
-                            roots:HTMLElement|ArrayLike<HTMLElement>,
-                            options?:DefaultOptions):Countdown.Controller {
-    return createCountdown(epoch * 1000, roots, options);
-}
-
-/**
- * Initialize a countdown that will update a template within the given roots.
- *
- * @param {Date|number} date time in milliseconds since UNIX epoch as target for the countdown.
- * @param {HTMLElement|Array} roots Elements that contain a template that needs to be updated based on the countdown.
- * @param {object} options Options to modify some properties of the countdown.
- */
-export function withMillis(date:Date|number,
-                           roots:HTMLElement|ArrayLike<HTMLElement>,
-                           options?:DefaultOptions):Countdown.Controller {
-    return createCountdown(Number(date), roots, options);
+export function countdown(opts:LibOptions):Countdown.Controller {
+    return createCountdown(Number(opts.endTime), opts.target, opts)
 }

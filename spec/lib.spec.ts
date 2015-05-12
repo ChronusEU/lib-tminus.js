@@ -4,14 +4,18 @@
 import lib = require('../src/lib');
 
 describe("Library entry point", () => {
-    it("should accept seconds", function () {
-        expect(() => lib.withSeconds(0, [])).not.toThrow();
-        expect(() => lib.withSeconds(Date.now() / 1000, [])).not.toThrow();
-    });
-
-    it("should accept milliseconds", function () {
-        expect(() => lib.withMillis(0, [])).not.toThrow();
-        expect(() => lib.withMillis(new Date(), [])).not.toThrow();
-        expect(() => lib.withMillis(Date.now(), [])).not.toThrow();
+    it("should accept different input permutations", function () {
+        expect(() => lib.countdown({
+            endTime: 0,
+            target: []
+        })).not.toThrow();
+        expect(() => lib.countdown({
+            endTime: new Date(),
+            target: []
+        })).not.toThrow();
+        expect(() => lib.countdown({
+            endTime: Date.now(),
+            target: []
+        })).not.toThrow();
     });
 });
