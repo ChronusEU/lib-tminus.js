@@ -9,3 +9,4 @@ require("./unit/Instant.spec");
 require("./unit/Period.spec");
 require("./countdown/Countdown.spec");
 require("./parser/AttributeTemplate.spec");
+require("./TsSyntaxTest");
