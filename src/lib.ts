@@ -30,6 +30,20 @@ function convertToArray<U>(input:U|ArrayLike<U>):ArrayLike<U> {
 
 export interface LibOptions extends Countdown.Options, Parser.ParserOptions {
     /**
+     * Class name that should be added to the provided root elements once the countdown has finished.
+     *
+     * Defaults to {@see DEFAULT_FINISHED_CLASS}
+     */
+    finishedClass?: string
+
+    /**
+     * Class name that should be removed from the provided root elements once the countdown has initialized.
+     */
+    loadingClass?: string
+}
+
+export interface InputOptions extends LibOptions {
+    /**
      * Instant that the countdown will be counting down to.
      *
      * Accepts either a Date instance or milliseconds since UNIX epoch (1st Jan 1970 00:00 UTC)
@@ -43,18 +57,6 @@ export interface LibOptions extends Countdown.Options, Parser.ParserOptions {
      * DOM tree to inject the countdown.
      */
     target: HTMLElement|ArrayLike<HTMLElement>
-
-    /**
-     * Class name that should be added to the provided root elements once the countdown has finished.
-     *
-     * Defaults to {@see DEFAULT_FINISHED_CLASS}
-     */
-    finishedClass?: string
-
-    /**
-     * Class name that should be removed from the provided root elements once the countdown has initialized.
-     */
-    loadingClass?: string
 }
 
 /**
@@ -109,6 +111,6 @@ function createCountdown(milliSeconds:number,
 /**
  * Entry point for the library, initializes a countdown using the target DOM and moment specified in the options.
  */
-export function countdown(opts:LibOptions):Countdown.Controller {
+export function countdown(opts:InputOptions):Countdown.Controller {
     return createCountdown(Number(opts.endTime), opts.target, opts)
 }
