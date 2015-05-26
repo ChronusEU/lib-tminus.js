@@ -4,7 +4,7 @@
  * Enum which represents all the time units that can be derived from a Period
  *
  * Uppercase time units are absolute
- * Lowercase time units are relative to their parent units (e.g. minutes since last hour)
+ * Lowercase time units are relative to their parent units (e.g. minutes until last hour)
  *
  * Currently supported units: Seconds, Minutes, Hours and Days.
  *
@@ -12,13 +12,13 @@
  */
 export enum TimeKey
 {
-    s, // seconds since last minute
-    S, // seconds since epoch
-    m, // minutes since last hour
-    M, // minutes since epoch
-    h, // hours since last day
-    H, // hours since epoch
-    D  // days since epoch
+    s, // seconds until next minute
+    S, // seconds until zero
+    m, // minutes until next hour
+    M, // minutes until zero
+    h, // hours until next day
+    H, // hours until zero
+    D  // days until zero
 }
 
 export interface TimeValue {
