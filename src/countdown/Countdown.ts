@@ -25,29 +25,29 @@ export interface Controller {
     /**
      * Returns a period that is always equal to the amount of time left until the countdown ends.
      */
-    getCurrentPeriod(): Period.Period;
+    currentPeriod(): Period.Period;
 
     /**
      * Returns the last period for which the actual countdown has been updated.
      *
      * If the window is hidden or in a tab then this value might not reflect the actual progress of the countdown,
-     * use {@see Controller#getCurrentPeriod} if the returned value should always be up to date.
+     * use {@see Controller#currentPeriod} if the returned value should always be up to date.
      */
-    getCountdownPeriod(): Period.Period;
+    lastUpdate(): Period.Period;
 
     /**
      * Stop the countdown, once it has been stopped it will no longer fire the updater or update its internal period.
      *
      * If the countdown has already stopped this method will do nothing.
      */
-    stopCountdown(): void;
+    stop(): void;
 
     /**
      * Starts a previously stopped countdown, it will retain all the state from before it was stopped.
      *
      * If the countdown is already running, the only effect of this method will be a forced call to the updater.
      */
-    startCountdown(): void;
+    start(): void;
 }
 
 //Utility function to generate the toString function for the Controller
@@ -82,10 +82,14 @@ export function create(endDate:Date, updater:Updater, opts:Options):Controller {
     var endInstant = Instant.make(endDate);
 
     if (endInstant.isValid()) {
+        var periodBuilder = () => {
+            return Instant.make(epoch()).until(endInstant);
+        };
+
         var prevPeriod = Period.ofMillis(Number.MAX_VALUE);
 
         var looper = Looper.make(() => {
-            var period = Instant.make(epoch()).until(endInstant);
+            var period = periodBuilder();
 
             if (!period.eq(prevPeriod)) {
                 prevPeriod = period;
@@ -107,24 +111,20 @@ export function create(endDate:Date, updater:Updater, opts:Options):Controller {
             opts.loadedCallback();
         }
 
-        var getCurrentPeriod = () => {
-            return Instant.make(epoch()).until(endInstant);
-        };
-
         return {
-            getCurrentPeriod: getCurrentPeriod,
-            getCountdownPeriod: () => {
+            currentPeriod: periodBuilder,
+            lastUpdate: () => {
                 return prevPeriod;
             },
-            stopCountdown: () => {
+            stop: () => {
                 looper.stop();
             },
-            startCountdown: () => {
+            start: () => {
                 //By setting prevPeriod, we force the updater to be called.
                 prevPeriod = Period.ofMillis(Number.MAX_VALUE);
                 looper.start();
             },
-            toString: generateToString(endInstant, getCurrentPeriod, looper)
+            toString: generateToString(endInstant, periodBuilder, looper)
         }
     } else {
         throw new Error("Invalid target date passed to countdown");
