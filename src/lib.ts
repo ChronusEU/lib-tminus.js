@@ -53,8 +53,8 @@ export interface InputOptions extends LibOptions {
     /**
      * DOM element(s) that will be injected with the countdown.
      *
-     * By default the {@see AttributeTemplateParser} is used, which uses data contained in the pre-existing
-     * DOM tree to inject the countdown.
+     * By default the {@see AttributeTemplateParser} is used to determine the format of the countdown.
+     * This parser uses data contained in the pre-existing DOM tree of the targets to inject the countdown.
      */
     target: HTMLElement|ArrayLike<HTMLElement>
 }
