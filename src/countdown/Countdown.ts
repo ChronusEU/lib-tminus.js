@@ -25,13 +25,13 @@ export interface Controller {
     /**
      * Returns a period that is always equal to the amount of time left until the countdown ends.
      */
-    getUpdatedPeriod(): Period.Period;
+    getCurrentPeriod(): Period.Period;
 
     /**
      * Returns the last period for which the actual countdown has been updated.
      *
      * If the window is hidden or in a tab then this value might not reflect the actual progress of the countdown,
-     * use {@see Controller#getUpdatedPeriod} if it should always be up to date.
+     * use {@see Controller#getCurrentPeriod} if the returned value should always be up to date.
      */
     getCountdownPeriod(): Period.Period;
 
@@ -107,12 +107,12 @@ export function create(endDate:Date, updater:Updater, opts:Options):Controller {
             opts.loadedCallback();
         }
 
-        var getUpdatedPeriod = () => {
+        var getCurrentPeriod = () => {
             return Instant.make(epoch()).until(endInstant);
         };
 
         return {
-            getUpdatedPeriod: getUpdatedPeriod,
+            getCurrentPeriod: getCurrentPeriod,
             getCountdownPeriod: () => {
                 return prevPeriod;
             },
@@ -124,7 +124,7 @@ export function create(endDate:Date, updater:Updater, opts:Options):Controller {
                 prevPeriod = Period.ofMillis(Number.MAX_VALUE);
                 looper.start();
             },
-            toString: generateToString(endInstant, getUpdatedPeriod, looper)
+            toString: generateToString(endInstant, getCurrentPeriod, looper)
         }
     } else {
         throw new Error("Invalid target date passed to countdown");
