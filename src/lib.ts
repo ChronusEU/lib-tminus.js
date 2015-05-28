@@ -20,8 +20,15 @@ var DEFAULT_FINISHED_CLASS:string = "finished";
  *   => return input wrapped in an Array
  */
 function convertToArray<U>(input:U|ArrayLike<U>):ArrayLike<U> {
-    //Presence of length property is enough to separate single element and array
-    if (typeof (<ArrayLike<U>>input).length !== "undefined") {
+    //Implementation based on jQuery's core.isArrayLike
+    var length = "length" in input && (<ArrayLike<U>>input).length;
+    var isArrayLike = typeof input === "array"
+        || length === 0
+        || typeof length === "number"
+        && length > 0
+        && ( length - 1 ) in input;
+
+    if (isArrayLike) {
         return <ArrayLike<U>>input;
     } else {
         return [<U>input];
