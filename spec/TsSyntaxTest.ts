@@ -7,7 +7,23 @@ import TminusLib = require("../src/lib");
 function noop() {
     var control = TminusLib.countdown({
         endTime: new Date().getTime() + (1000 * 60 * 60),
-        target: <NodeListOf<HTMLElement>>document.querySelectorAll('#countdown')
+        target: <NodeListOf<HTMLElement>>document.querySelectorAll('#countdown'),
+        finishedClass: "finished",
+        loadingClass: "loading",
+        finishedCallback: () => {
+            console.log("finished");
+        },
+        loadingCallback: () => {
+            console.log("loaded");
+        },
+        displayAttribute: "tminus-unit",
+        hidableAttribute: "tminus-hide-if-zero",
+        zeroPadOverrides: {
+            "D": false
+        }
     });
-    control.stopCountdown(); //Stop the countdown!
+    control.stop(); //Stop the countdown!
+    control.start();
+    control.currentPeriod();
+    control.lastUpdate();
 }
