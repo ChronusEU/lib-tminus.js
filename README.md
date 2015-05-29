@@ -32,7 +32,7 @@ There are two ways of downloading the distribution:
 1. Through [the github releases](https://github.com/ChronusEU/lib-tminus.js/releases), simply download the latest release.
 2. Through [bower](http://bower.io/)
 
-   `TODO: bower command`
+   `bower install lib-tminus`
 
 #### How to use
 
@@ -140,6 +140,6 @@ By adding the following piece of code after including jQuery and TminusLib, the 
 Usage as a library
 ------------
 TODO:
-- Library is available through npm (LINK TODO)
+- Library is available through [npm](https://www.npmjs.com/package/lib-tminus)
 - Typescript is supported by adding a reference to `<npm-dir>/lib-tminus/src-gen/modules.d.ts`
 - Library can be directly require'd into application code through tools like [browserify](http://browserify.org/)
