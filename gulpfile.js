@@ -45,7 +45,8 @@ var config = {
         sources: './src/**/*.ts'
     },
     target: {
-        dist: 'dist',
+        dist: 'dist-stage',
+        bower_dist: 'dist',
         genJS: 'src-gen',
         tmp: 'tmp'
     }
@@ -106,6 +107,11 @@ gulp.task('script:build', ['clean'], function () {
         .pipe(sourcemaps.write('./'))
         .pipe(plumber.stop())
         .pipe(gulp.dest(config.target.dist));
+});
+
+gulp.task('update-bower', ['script:build'], function () {
+    return gulp.src(config.target.dist + '/**/*')
+        .pipe(gulp.dest(config.target.bower_dist));
 });
 
 gulp.task('script:archive', ['script:build'], function () {

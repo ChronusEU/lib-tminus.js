@@ -32,7 +32,7 @@ There are two ways of downloading the distribution:
 1. Through [the github releases](https://github.com/ChronusEU/lib-tminus.js/releases), simply download the latest release.
 2. Through [bower](http://bower.io/)
 
-   `TODO: bower command`
+   `bower install lib-tminus`
 
 #### How to use
 
