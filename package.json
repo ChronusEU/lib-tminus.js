@@ -1,6 +1,6 @@
 {
   "name": "lib-tminus",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "A lightweight countdown library for the browser",
   "main": "src-gen/lib.js",
   "scripts": {
