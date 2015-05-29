@@ -14,6 +14,7 @@ var plumber = require('gulp-plumber');
 var ts = require('gulp-typescript');
 var merge = require('merge2');
 var sourcemaps = require('gulp-sourcemaps');
+var zip = require('gulp-zip');
 var pkg = require('./package.json');
 
 var banner =
@@ -104,6 +105,12 @@ gulp.task('script:build', ['clean'], function () {
         }))
         .pipe(sourcemaps.write('./'))
         .pipe(plumber.stop())
+        .pipe(gulp.dest(config.target.dist));
+});
+
+gulp.task('script:archive', ['script:build'], function () {
+    return gulp.src(config.target.dist + '/**/*')
+        .pipe(zip(config.globalName + '-dist-' + pkg.version + '.zip'))
         .pipe(gulp.dest(config.target.dist));
 });
 
