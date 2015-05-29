@@ -140,6 +140,6 @@ By adding the following piece of code after including jQuery and TminusLib, the 
 Usage as a library
 ------------
 TODO:
-- Library is available through npm (LINK TODO)
+- Library is available through [npm](https://www.npmjs.com/package/lib-tminus)
 - Typescript is supported by adding a reference to `<npm-dir>/lib-tminus/src-gen/modules.d.ts`
 - Library can be directly require'd into application code through tools like [browserify](http://browserify.org/)
