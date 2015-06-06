@@ -19,9 +19,9 @@ var DEFAULT_FINISHED_CLASS:string = "finished";
  * Else:
  *   => return input wrapped in an Array
  */
-function convertToArray<U>(input:U|ArrayLike<U>):ArrayLike<U> {
+function convertToArray<U>(input:U|ArrayLikeShim<U>):ArrayLikeShim<U> {
     //Implementation based on jQuery's core.isArrayLike
-    var length = "length" in input && (<ArrayLike<U>>input).length;
+    var length = "length" in input && (<ArrayLikeShim<U>>input).length;
     var isArrayLike = typeof input === "array"
         || length === 0
         || typeof length === "number"
@@ -29,7 +29,7 @@ function convertToArray<U>(input:U|ArrayLike<U>):ArrayLike<U> {
         && ( length - 1 ) in input;
 
     if (isArrayLike) {
-        return <ArrayLike<U>>input;
+        return <ArrayLikeShim<U>>input;
     } else {
         return [<U>input];
     }
@@ -63,7 +63,7 @@ export interface InputOptions extends LibOptions {
      * By default the {@see AttributeTemplateParser} is used to determine the format of the countdown.
      * This parser uses data contained in the pre-existing DOM tree of the targets to inject the countdown.
      */
-    target: HTMLElement|ArrayLike<HTMLElement>
+    target: HTMLElement|ArrayLikeShim<HTMLElement>
 }
 
 /**
@@ -75,7 +75,7 @@ export interface InputOptions extends LibOptions {
  * * Return the controls for the created looper.
  */
 function createCountdown(milliSeconds:number,
-                         roots:HTMLElement|ArrayLike<HTMLElement>,
+                         roots:HTMLElement|ArrayLikeShim<HTMLElement>,
                          options:LibOptions):Countdown.Controller {
     var rootArray = convertToArray(roots);
 

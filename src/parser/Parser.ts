@@ -24,5 +24,5 @@ export interface Parser {
      *
      * @param {Array} roots root elements of the DOM that needs to be updated by this countdown.
      */
-    build(roots:ArrayLike<HTMLElement>): Callback;
+    build(roots:ArrayLikeShim<HTMLElement>): Callback;
 }

@@ -171,7 +171,7 @@ export class AttributeTemplateParser implements Parser.Parser {
         }
     }
 
-    build(roots:ArrayLike<HTMLElement>):Callback {
+    build(roots:ArrayLikeShim<HTMLElement>):Callback {
         var displayElements:HTMLElement[] = [];
         var hidableElements:HTMLElement[] = [];
 

@@ -12,7 +12,7 @@
  * @param {Function} callback callback to call on each element
  * @param {object} scope scope to call the callback in, can be undefined.
  */
-function forEach<T>(array:ArrayLike<T>, callback:(value:T, index:number) => any, scope?:any):void {
+function forEach<T>(array:ArrayLikeShim<T>, callback:(value:T, index:number) => any, scope?:any):void {
     var length = array.length;
     for (var i = 0; i < length; i++) {
         callback.call(scope, array[i], i);

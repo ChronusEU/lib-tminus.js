@@ -37,7 +37,7 @@ export class StringTemplateParser implements Parser.Parser {
         throw "Not yet ready for use, see parser/StringTemplateParser";
     }
 
-    build(roots:ArrayLike<HTMLElement>):Callback {
+    build(roots:ArrayLikeShim<HTMLElement>):Callback {
         // Idea is to cloneNode the template, move the cloned elements to the new root and
         //  then creating a parser for the elements (perhaps reuse AttributeTemplateParser)
         forEach(roots, (el) => {
